@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Render a select snippet DOM snapshot should match 1`] = `
+"<div id=\\"stage\\">
+<h1>Some Test title</h1>
+<select>
+  
+    <option value=\\"1\\">One</option> 
+  
+    <option value=\\"2\\">Two</option> 
+  
+    <option value=\\"3\\">Three</option> 
+  
+    <option value=\\"4\\">Four</option> 
+  
+</select></div>"
+`;

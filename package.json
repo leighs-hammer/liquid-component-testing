@@ -1,0 +1,17 @@
+{
+  "name": "shopify-component-render",
+  "version": "0.0.1",
+  "description": "Render and test against components, designed for regression testing of a component library",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch" : "jest --watchAll"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^24.5.0",
+    "liquidjs": "^8.0.2",
+    "nodemon": "^1.18.10"
+  }
+}
