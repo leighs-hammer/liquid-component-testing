@@ -1,14 +1,37 @@
+/**
+ * Proof of concept to unit test A Shopify Liquid component
+ * The limitations are pretty drastic but the concept should
+ * be viable. 
+ * 
+ * Test render -> evaluating values
+ * Test Snapshot -> Evaluates the dom tree 
+ * Test Visual -> 
+ * 
+ */
+
+const http = require('http')
 const path = require('path')
 const Liquid = require('liquidjs')
+
+const app = require('./_visualRender')
+const puppeteer = require('puppeteer')
+const { toMatchImageSnapshot } = require('jest-image-snapshot')
+
+const server = http.createServer(app)
+
+// Simulating shopify data passed into a component ( ./liquidComponents/select.liquid )
 const engine = new Liquid({
   root: path.resolve(__dirname, '../liquidComponents/'), 
   extname: '.liquid' 
 })
 
+// express config
+app.engine('liquid', engine.express()); // register liquid engine
+app.set('views', path.resolve(__dirname, '../liquidComponents/'));            // specify the views directory
+app.set('view engine', 'liquid'); 
 
 
-// console.log(engine)
-
+// stubbed 
 const stubbedOptions = {
   "title": "Some Test title",
   selectOptions : [
@@ -23,6 +46,10 @@ const stubbedOptions = {
 
 describe('Render a select snippet', () => {
 
+  afterEach(() => {
+    console.log('closing server')
+    server.close()
+  })
   /**
    * Tests that the select renders
    */
@@ -71,5 +98,30 @@ describe('Render a select snippet', () => {
 
   })
 
-})
+  /**
+   * Visually Test the dom against snapshot
+   * This is a heavy weight test and as such should be used
+   * sparingly for specific purpose.
+   */
+  test('Visually Test the select', async (done) => {
 
+    // render the component at root
+    app.get('/select', function (req, res) { res.render("select", stubbedOptions)})
+    server.listen(3000)
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.setViewport({width: 1440, height: 900})
+    await page.goto('http://localhost:3000/select');
+    const screenshot = await page.screenshot().then(image => image)
+    
+    // visual test extend
+    expect.extend({ toMatchImageSnapshot })
+    expect(screenshot).toMatchImageSnapshot()
+
+    // clear out
+    await browser.close()
+    done()
+    
+  })
+
+})
