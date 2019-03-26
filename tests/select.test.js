@@ -9,10 +9,10 @@
  * 
  */
 
-const http = require('http')
 const path = require('path')
 const Liquid = require('liquidjs')
 
+const http = require('http')
 const app = require('./_visualRender')
 const puppeteer = require('puppeteer')
 const { toMatchImageSnapshot } = require('jest-image-snapshot')
@@ -31,16 +31,8 @@ app.set('views', path.resolve(__dirname, '../liquidComponents/'));            //
 app.set('view engine', 'liquid'); 
 
 
-// stubbed 
-const stubbedOptions = {
-  "title": "Some Test title",
-  selectOptions : [
-    {val: 1, name: "One"},
-    {val: 2, name: "Two"},
-    {val: 3, name: "Three"},
-    {val: 4, name: "Four"},
-  ]
-}
+// stubbed data for the liquid render
+const stubbedOptions = require('../stubs/select.json')
 
 
 

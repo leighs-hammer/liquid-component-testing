@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "serve":""
+    "serve":"node ./index.js"
   },
   "author": "",
   "license": "ISC",
