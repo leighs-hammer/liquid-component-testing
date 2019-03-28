@@ -1,9 +1,9 @@
 {% comment %} 
   // Renders a drop down for testing in 
 {% endcomment %}
-<h1>{{title}}</h1>
+<h1>{{select.title}}</h1>
 <select>
-  {% for option in selectOptions %}
+  {% for option in select.selectOptions %}
     <option value="{{option.val}}">{{option.name}}</option> 
   {% endfor %}
 </select>

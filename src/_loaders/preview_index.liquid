@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+  {% include '_head' %}
+  <body id="preview_index">
+  
+    {% include '_header' %}
+
+    <div id="combinedStage">
+      {% include '_sidebar' %}
+
+      <div id="mainStage">
+        {% if params.target %}
+          {% include params.target %}
+        {% endif %}
+        {% if root %}
+          {% include '_landingContent' %}
+        {% endif %}
+      </div>
+
+    <div>
+    
+    {% include '_foot' %}
+  </body>
+</html>
+
+
+

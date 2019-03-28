@@ -21,7 +21,7 @@ To get the system up:
 1. `npm install` ( tested on node@11 +)
 2. 'npm run test` or `npm run test:watch`
 
-That will cycle through a test of the `./liquidComponents/select.liquid` file. 
+That will cycle through a test of the `./src/snippets/select.liquid` file. 
 
 if you would like to view that file.
 

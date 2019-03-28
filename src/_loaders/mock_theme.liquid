@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+  {% include '_head' %}
+  <body id="mock_theme">
+
+    {% comment %} This is the test subject {% endcomment %}
+    {% if params.target %}
+      {% include params.target %}
+    {% endif %}
+    
+    
+    {% include '_foot' %}
+  </body>
+</html>

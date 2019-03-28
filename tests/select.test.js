@@ -13,21 +13,25 @@ const path = require('path')
 const Liquid = require('liquidjs')
 
 const http = require('http')
-const app = require('./_visualRender')
+const app = require('../_visualRender')
 const puppeteer = require('puppeteer')
+
+const GLOBAL_STUBS = require('../stubs/index')
+
+
 const { toMatchImageSnapshot } = require('jest-image-snapshot')
 
 const server = http.createServer(app)
 
-// Simulating shopify data passed into a component ( ./liquidComponents/select.liquid )
+// Simulating shopify data passed into a component ( ./src/snippets/select.liquid )
 const engine = new Liquid({
-  root: path.resolve(__dirname, '../liquidComponents/'), 
+  root: path.resolve(__dirname, '../src/snippets/'), 
   extname: '.liquid' 
 })
 
 // express config
 app.engine('liquid', engine.express()); // register liquid engine
-app.set('views', path.resolve(__dirname, '../liquidComponents/'));            // specify the views directory
+app.set('views', path.resolve(__dirname, '../src/snippets/'));            // specify the views directory
 app.set('view engine', 'liquid'); 
 
 
@@ -51,7 +55,7 @@ describe('Render a select snippet', () => {
     const doc = document.body.innerHTML = `<div id="stage"></div>`
     const stage = document.getElementById('stage')
 
-    const renderedComponent = await engine.renderFile("select", stubbedOptions)
+    const renderedComponent = await engine.renderFile("select", GLOBAL_STUBS)
       .then(component => {
           stage.innerHTML = component
         }
@@ -60,7 +64,8 @@ describe('Render a select snippet', () => {
 
     // title Renders
     const title = document.querySelector('#stage h1')
-    expect(title.innerHTML).toEqual(stubbedOptions.title)
+    console.log(GLOBAL_STUBS.select.title)
+    expect(title.innerHTML).toEqual(GLOBAL_STUBS.select.title)
 
     const optionsList = document.querySelectorAll(`#stage select option`)
     // check node list length
@@ -80,7 +85,7 @@ describe('Render a select snippet', () => {
     const doc = document.body.innerHTML = `<div id="stage"></div>`
     const stage = document.getElementById('stage')
 
-    const renderedComponent = await engine.renderFile("select", stubbedOptions)
+    const renderedComponent = await engine.renderFile("select", GLOBAL_STUBS)
       .then(component => {
           stage.innerHTML = component
         }
@@ -98,12 +103,12 @@ describe('Render a select snippet', () => {
   test('Visually Test the select', async (done) => {
 
     // render the component at root
-    app.get('/select', function (req, res) { res.render("select", stubbedOptions)})
-    server.listen(3000)
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
+    app.get('/select', function (req, res) { res.render("select", )})
+    server.listen(3300)
+    const browser = await puppeteer.launch()
+    const page = await browser.newPage()
     await page.setViewport({width: 1440, height: 900})
-    await page.goto('http://localhost:3000/select');
+    await page.goto('http://localhost:3300/select')
     const screenshot = await page.screenshot().then(image => image)
     
     // visual test extend

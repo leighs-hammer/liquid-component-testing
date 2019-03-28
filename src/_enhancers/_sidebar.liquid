@@ -1,0 +1,19 @@
+<div id="quickNav">
+  {% for list in nav %}
+    
+    {% if list[0] == 'tales' %}
+      <h3><a href="/tales/tales">{{list[0]}}</a></h3>
+      <p>{{appConfig.navText.tales.subtext}}</p>
+    {% else %}
+      <h3>{{list[0]}}</h3>
+    {% endif %}
+    <ul>
+      {% for link in list[1] %}
+        <li>
+          <a href="/qv/{{link}}" {% if params.target == link %} class="active"{% endif %}>{{link}}</a>
+          <a href="/{{link}}" {% if params.target == link %} class="active"{% endif %}>🏴‍☠️</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endfor %}
+</div>
