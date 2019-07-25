@@ -1,0 +1,46 @@
+<style>
+  {{ settings.font_heading | font_face }}
+  {{ settings.font_heading_bold | font_face }}
+  {{ settings.font_body | font_face }}
+  {{ settings.font_body_lightest | font_face }}
+
+  {%- assign font_body_bold = settings.font_body | font_modify: 'weight', 'bolder' -%}
+  {%- assign font_body_bold_italic = font_body_bold | font_modify: 'style', 'italic' -%}
+
+  {{ font_body_bold | font_face }}
+  {{ font_body_bold_italic | font_face }}
+
+  :root {
+    
+    --color-accent: {{ settings.color_accent }};
+    --color-accent-primary: {{ settings.color_accent_primary }};
+    --color-accent-secondary: {{ settings.color_accent_secondary }};
+    --color-accent-tertiary: {{ settings.color_accent_tertiary }};
+
+    --color-accent-sale: {{ settings.color_accent_sale }};
+
+    --color-body-text: {{ settings.color_body_text }};
+    --color-unselected-text: {{ settings.color_unselected_text }};
+    --color-heading-text: {{ settings.color_heading_text }};
+    --color-main-background: {{ settings.color_main_bg }};
+    --color-border: {{ settings.color_body_text | color_lighten: 50 }};
+
+    --color-footer-main-background: {{ settings.color_footer_main_bg }};
+    --color-footer-secondary-background: {{ settings.color_footer_secondary_bg }};
+
+    --font-heading-bold: {{ settings.font_heading_bold.family }}, {{ settings.font_heading.fallback_families }};
+    --font-heading: {{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
+    --font-body-light: {{ settings.font_body_light.family }}, {{ settings.font_body.fallback_families }};
+    --font-body-lightest: {{ settings.font_body_light.family }}, {{ settings.font_body.fallback_families }};
+    --font-body: {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
+
+    --font-body-medium: {{ settings.font_body_medium.weight }};
+    --font-body-weight: {{ settings.font_body.weight }};
+    --font-body-style: {{ settings.font_body.style }};
+    --font-body-bold-weight: {{ font_body_bold.weight | default: 'bold' }};
+
+    --slider-arrow-image: {{ "arrow.svg" | asset_url }};
+    --slider-arrow-image-circle: {{ "arrowCircle.svg" | asset_url }};
+
+  }
+</style>

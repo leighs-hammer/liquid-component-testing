@@ -1,0 +1,79 @@
+
+<section class="latest-news-wrapper container">
+	{% if section.settings.title != blank %}
+		{% assign title = section.settings.title %}
+		{% assign emboldenment = section.settings.emboldenment %}
+		{% include 'embolden' %}
+	{% endif %}
+	<div class="latest-news">
+		{% assign blog = blogs.news %}
+		{% for article in blog.articles %}
+			<article
+				class="latest-news-item"
+				{% if forloop.index != 1 %} {{ 'data-device="mobile"' }} {% endif %}
+			>
+				<a
+					class="latest-news-item-inner"
+					href="{{article.url}}"
+				>
+					{% for tag in article.tags %}
+						<div class="latest-news-tag">{{ tag }}</div>
+						{% if forloop.index == 1 %} {% break %} {% endif %}
+					{% endfor %}
+					<figure class="latest-news-image">
+						{{ article.image.src | img_url: '750x' | img_tag }}
+					</figure>
+					<div class="latest-news-text-wrapper">
+						<header class="latest-news-title">
+							<h4>{{ article.title | truncatewords: 5 }}</h4>
+						</header>
+						<main class="latest-news-content">
+							{{ article.excerpt | truncatewords: 30 }}
+						</main>
+					</div>
+				</a>
+			</article>
+		{% endfor %}
+	</div>
+
+	{% assign btn-target = '/blogs' %}
+	{% assign btn-content = section.settings.cta_text %}
+	{% assign btn-modifier = 'btn-lines btn-lines--red' %}
+	{% include 'btn' %}
+</section>
+
+{% schema %}
+  {
+	"name": "Latest News",
+	"settings": [
+	  {
+		"type": "header",
+		"content": "Navigation"
+	  },
+	  {
+		"id": "title",
+		"type": "text",
+		"label": "Title"
+	  },
+	  {
+		"type":      "checkbox",
+		"id":        "emboldenment",
+		"label":     "Embolden First Word",
+		"info":      "Uncheck to embolden last word",
+		"default":   true
+	  },
+	  {
+		"id": "cta_text",
+		"type": "text",
+		"default": "More News",
+		"label": "CTA Text"
+	  }
+	],
+	"presets": [
+	  {
+		"name": "Latest News",
+		"category": "Content"
+	  }
+	]
+  }
+{% endschema %}

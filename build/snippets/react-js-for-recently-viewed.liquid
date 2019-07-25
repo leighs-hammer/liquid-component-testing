@@ -1,0 +1,76 @@
+{% comment %} Adds an item to the recently viewed either a collection or a product {% endcomment %}
+{% if product.id %}
+	{% assign recentType = 'product' %}
+{% elsif collection.id %}
+	{% assign recentType = 'collection' %}
+{% else %}
+	{% assign recentType = false %}
+{% endif %}
+
+{% if recentType %}
+	{% capture recentObject %}
+		{
+			"id" : {% if recentType == 'product' %}"{{product.id}}"{% else %}"{{collection.id}}"{% endif %},
+			"type": "{{recentType}}",
+			"handle": {% if recentType == 'product' %}"{{product.handle}}"{% else %}"{{collection.handle}}"{% endif %},
+			"title": {% if recentType == 'product' %}"{{product.title}}"{% else %}"{{collection.title}}"{% endif %},
+				{% if recentType == 'product' %}
+				"price" : {
+					"price": "{{product.price | money}}",
+					"min" : "{{product.price_min | money}}",
+					"max" : "{{product.price_max | money}}",
+					"varies" : {{product.price_varies}},
+					"compare_min" : "{{product.compare_at_price_max | money}}",
+					"compare_max" : "{{product.compare_at_price_min | money}}",
+					"compare_varies" : {{product.compare_at_price_varies}},
+				},
+			{% endif %}
+			"url": {% if recentType == 'product' %}"{{product.url}}"{% else %}"{{collection.url}}"{% endif %},
+			"image" : {% if recentType == 'product' %}"{{product.featured_image | img_url: '200x200', crop: 'center'}}"{% else %}"{{collection.image | img_url: '200x200', crop: 'center', format: 'pjpg'}}"{% endif %},
+		}
+	{% endcapture %}
+	{% if recentType == 'product' %}
+		{% assign stapleId = product.id  %}
+	{% else %}
+		{% assign stapleId = collection.id  %}
+	{% endif %}
+	{% comment %} ReactWidget {% endcomment %}
+	{% include 'react-recently-viewed' %}
+
+	{% comment %}  {% endcomment %}
+	<script>
+		(function() {
+			document.addEventListener("DOMContentLoaded", function(event) {
+				const recentsStart = () => {
+					const recentObject = {{recentObject}}
+					if(recentObject) {
+						window.recentlyViewed.addItem(recentObject)
+					}
+					
+					var rrvConfig = {
+						stapleId: "{{stapleId}}", 
+						desktop: {{section.settings.desktopLimit}},
+						mobile: {{section.settings.mobileLimit}}, 
+						disableClicks: false,
+						enableCollections: {{section.settings.enableCcollections}},
+						headingText: "{{section.settings.headingText}}",
+						colors : {
+							sale : "{{section.settings.saleColor}}"
+						}
+					}
+
+					// fire up the blades
+					if(window.recentlyViewed.setData(rrvConfig)) {
+						console.log('firing up react ')
+						const reactSrc = "{{ 'react-recently-viewed.js' | asset_url }}"
+						// the react widget self insantiates with data-attributes
+						window.recentlyViewed.addSrcForWidget(reactSrc)
+						window.recentlyViewed.addStorageEvents()
+					}
+				}
+				recentsStart();
+				window.forceRenderRecentlyViewed = recentsStart
+  		})
+		})()
+	</script>
+{% endif %}

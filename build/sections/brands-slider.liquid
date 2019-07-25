@@ -1,0 +1,140 @@
+{%- comment -%}
+  This is a not required section for the Shopify Theme Store.
+  It is available when you add "Brands Slider" section in the Theme Editor.
+{%- endcomment -%}
+{%- capture sliderConfig -%}
+    {
+        "arrows" : false,
+        "slidesToShow" : 7,
+        "slidesToScroll": 1,
+        "dots" : {{section.settings.enable_dots}},
+        "autoplay" : {{section.settings.autoplay}},
+        "lazyLoad":"ondemand",
+        "responsive": 
+          [
+           {
+            "breakpoint": 1024,
+            "settings": {
+              "slidesToShow": 6
+            }
+          },
+           {
+            "breakpoint": 920,
+            "settings": {
+              "slidesToShow": 5
+            }
+          },
+           {
+            "breakpoint": 768,
+            "settings": {
+              "slidesToShow": 4
+            }
+          },
+           {
+            "breakpoint": 400,
+            "settings": {
+              "slidesToShow": 3
+            }
+          }
+        ]
+    }
+{%- endcapture -%}
+
+<section class="homepage-brands-slider container">
+  {% if section.settings.title != blank %}
+    {% assign title = section.settings.title %}
+    {% assign emboldenment = section.settings.emboldenment %}
+    {% include 'embolden' %}
+  {% endif %}
+  <article 
+    id="slideshow-{{section.id}}"
+    data-slick-slideshow="{{section.id}}"
+    data-slick-config='{{ sliderConfig }}'
+  >
+    {% for block in section.blocks %}
+      <a
+        href="{{ block.settings.link }}"
+        class="brands-slider-brand"
+        id="slideshow-block-{{block.id}}"
+        data-slick-theme-editor-index="{{forloop.index0}}"
+        {{ block.shopify_attributes }} 
+      >
+        <img data-lazy="{{ block.settings.image | img_url: '300x' }}" alt="" />
+      </a>
+    {% endfor %}
+  </article>
+  {% assign btn-target = section.settings.cta_link %}
+  {% assign btn-content = section.settings.cta_text %}
+  {% assign btn-modifier = 'btn-lines btn-lines--red' %}
+  {% include 'btn' %}
+</section>
+
+{% schema %}
+  {
+    "name": "Brands Slider",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Featured Brands"
+      },
+      {
+        "type":      "checkbox",
+        "id":        "emboldenment",
+        "label":     "Embolden First Word",
+        "info":      "Uncheck to embolden last word",
+        "default":   true
+      },
+      {
+        "id": "cta_text",
+        "type": "text",
+        "label": "Link",
+        "default": "Browse Brands"
+      },
+      {
+        "id": "cta_link",
+        "type": "url",
+        "label": "CTA Link"
+      },
+      {
+          "type": "header",
+          "content": "Slider Controls"
+      },
+      {
+        "id": "enable_dots",
+        "type": "checkbox",
+        "label": "Enable Dots"
+      },
+      {
+        "id": "autoplay",
+        "type": "checkbox",
+        "label": "Enable Autoplay"
+      }
+    ],
+	  "blocks": [
+      {
+        "type": "text",
+        "name": "Brand",
+        "settings": [
+          {
+            "id": "image",
+            "type": "image_picker",
+            "label": "Image"
+          },
+          {
+            "id": "link",
+            "type": "url",
+            "label": "Link"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Brands Slider",
+        "category": "Content"
+      }
+    ]
+  }
+{% endschema %}

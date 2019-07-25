@@ -1,0 +1,202 @@
+{%- comment -%}
+  This is a not a required section for the Shopify Theme Store.
+  It is available in the "Dynamic Content Boxes" section in the theme editor.
+{%- endcomment -%}
+
+{% comment %} Dynamic Content Boxes {% endcomment %}
+
+<section class="dynamic-content-boxes container">
+	{% for block in section.blocks %}
+		{% assign data = block.settings %}
+		{% assign image_width = data.width | times: 1920 | divided_by: data.parts | append: 'x' %}        
+		<article
+			class="dynamic-content-box
+			dynamic-content-box--{{ data.width }}-{{ data.parts }}"
+		>
+			<a 
+				href="{{ data.link }}"
+				style="color: {{ data.text_color }};"
+				class="dynamic-content-box__content-wrapper
+				{% if data.swoosh != blank %} {{ 'swoosh' }} {% endif %}"
+			>
+				<figure class="dynamic-content-box-content__image-wrapper">
+					{{ data.image | img_url: image_width | img_tag }}
+				</figure>
+				<main
+					class="dynamic-content-box__content
+					horizontal-{{ data.horizontal_alignment }}
+					vertical-{{ data.vertical_alignment }}"
+				>
+					<div class="dynamic-content-box_text">
+						<div>{{ data.text }}</div>
+						{% if data.cta != "none" %}
+							{% assign btn-target = data.link %}
+							{% assign btn-title = "link to: " | append: data.name %}
+							{% assign btn-content = data.cta_text %}
+							{% assign btn-modifier = 'btn-lines btn-lines--' | append: data.cta %}
+							{% assign btn-is-not-anchor = true %}
+							{% include 'btn' %}
+						{% endif %}
+					</div>
+				</main>
+				{% if data.arrow %}
+					<div class="dynamic-content-box-arrow">
+						{% include 'icon-red-arrow' %}
+					</div>
+				{% endif %}
+			</a>
+		</article>
+	{% endfor %}
+</section>
+
+
+{% schema %}
+{
+	"name": "Dynamic Content Boxes O",
+		"settings": 
+		[
+			{
+				"type": "header",
+				"content": "Dynamic Content Boxes"
+			}
+		],
+		"blocks":
+		[
+			{
+				"type": "text",
+				"name": "Dynamic Content Boxes",
+				"settings":
+				[
+					{
+						"id": "image",
+						"type": "image_picker",
+						"label": "Image"
+					},
+					{
+						"id": "text_color",
+						"type": "color",
+						"default": "#fff",
+						"label": "Text Colour"
+					},
+					{
+						"id": "text",
+						"type": "richtext",
+						"label": "Title Text"
+					},
+					{
+						"id": "cta",
+						"type": "select",
+						"label": "CTA",
+						"default":   "none",                   
+						"options": [
+							{
+								"value": "none",
+								"label": "None"
+							},
+							{
+								"value": "white",
+								"label": "White"
+							},
+							{
+								"value": "red",
+								"label": "Red"
+							},
+							{
+								"value": "black",
+								"label": "Black"
+							}
+						]
+					},
+					{
+						"id": "cta_text",
+						"type": "text",
+						"label": "CTA Text"
+					},
+					{
+						"id": "horizontal_alignment",
+						"type": "select",
+						"label": "Horizontal Text Alignment",
+						"default":   "center",                   
+						"options": [
+							{
+								"value": "left",
+								"label": "Left"
+							},
+							{
+								"value": "center",
+								"label": "Center"
+							},
+							{
+								"value": "right",
+								"label": "Right"
+							}
+						]
+					},
+					{
+						"id": "vertical_alignment",
+						"type": "select",
+						"label": "Vertical Text Alignment",
+						"default":   "middle",                       
+						"options": [
+							{
+								"value": "top",
+								"label": "Top"
+							},
+							{
+								"value": "middle",
+								"label": "Middle"
+							},
+							{
+								"value": "bottom",
+								"label": "Bottom"
+							}
+						]
+					},
+					{
+						"type":      "range",
+						"id":        "parts",
+						"min":       1,
+						"max":       4,
+						"step":      1,
+						"label":     "Parts Per Row",
+						"default":   4
+					},
+					{
+						"type":      "range",
+						"id":        "width",
+						"min":       1,
+						"max":       4,
+						"step":      1,
+						"label":     "Item Width",
+						"default":   1
+					},
+					{
+						"id": "link",
+						"type": "url",
+						"label": "Link"
+					},
+					{
+						"id": "arrow",
+						"type": "checkbox",
+						"label": "Red Arrow",
+						"info": "Display Red Arrow in Bottom Right"
+					},
+					{
+						"id": "swoosh",
+						"type": "checkbox",
+						"label": "Swoosh",
+						"info": "Zoom and Rotate Image on Hover"
+					}
+				]
+			}
+		],
+		"presets": 
+		[
+			{
+				"name": "Dynamic Content Boxes",
+				"category": "Content"
+			}
+		]
+}
+{% endschema %}
+

@@ -1,0 +1,94 @@
+{%- comment -%}
+  It is available when you add the "Background Image Row" section in the theme editor.
+
+  Theme Store required settings
+  - Image
+  - Image (mobile)
+  - Heading: title of the block
+  - Text: description of the block
+  - Description title of the block
+  - Description (mobile): title of the block on mobile devices
+
+  Theme Store optional settings
+  - Button label: label associated with the button
+  - Button link: link of the button
+{%- endcomment -%}
+
+<section class="background-image-row">
+  <div class="background-image-row__image" data-device="tablet">
+    {{ section.settings.image | img_url: '2000x' | img_tag }}
+  </div>
+  <div class="background-image-row__image" data-device="mobile-mf">
+    {{ section.settings.image_mobile | img_url: '500x' | img_tag }}
+  </div>
+
+  <div class="background-image-row__text">
+    {% if section.settings.title != blank %}
+      <h2 class="background-image-row-header">{{ section.settings.title }}</h2>
+    {% endif %}
+    {% if section.settings.text_mobile != blank %}
+      <div class="background-image-row-content" data-device="mobile-mf">{{ section.settings.text_mobile }}</div>
+    {% endif %}
+    {% if section.settings.text != blank %}
+      <div class="background-image-row-content" data-device="tablet">{{ section.settings.text }}</div>
+    {% endif %}
+    {% if section.settings.button_label != blank and section.settings.button_link != blank %}
+      {% assign btn-target = section.settings.button_link %}
+      {% assign btn-content = section.settings.button_label %}
+      {% assign btn-modifier = 'btn-lines btn-lines--white' %}
+      {% include 'btn' %}
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Background Image Row",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_mobile",
+        "label": "Mobile Image"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Image with text"
+      },
+      {
+        "type": "richtext",
+        "id": "text",
+        "label": "Text",
+        "default": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+      },
+      {
+        "type": "richtext",
+        "id": "text_mobile",
+        "label": "Mobile Text",
+        "default": "<p>Get Your Skate on.</p>"
+      },
+      {
+        "type": "text",
+        "id": "button_label",
+        "label": "Button label"
+      },
+      {
+        "type": "url",
+        "id": "button_link",
+        "label": "Button link"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Background Image Row",
+        "category": "Image"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,57 @@
+
+{% include 'react-js-for-recently-viewed' %}
+
+{% schema %}
+	{
+		"name" : "Recently Viewed",
+		"settings" : [
+			{
+				"type": "header",
+				"content": "Notes"
+			},
+			{
+				"type": "paragraph",
+				"content": "Clicking on products in the theme editor view will not navigate to the product in theme editor."
+			},
+			{
+				"type": "header",
+				"content": "Global Settings"
+			},
+			{
+				"type":      "text",
+				"id":        "headingText",
+				"label":     "Section Title",
+				"default":   "Recently Viewed"
+			},
+			{
+				"type":      "checkbox",
+				"id":        "enableCcollections",
+				"label":     "Enable Collections",
+				"default":   false,
+				"info":      "If you would like to show collections and products in a clients recents."
+			},
+			{
+				"type":      "text",
+				"id":        "mobileLimit",
+				"label":     "Mobile products to display",
+				"default":   "2"
+			},
+			{
+				"type":      "text",
+				"id":        "desktopLimit",
+				"label":     "Desktop products to display",
+				"default":   "5"
+			},
+			{
+				"type": "header",
+				"content": "Colors"
+			},
+			{
+				"type":      "color",
+				"id":        "saleColor",
+				"label":     "Sale Color Accent",
+				"default":   "#D34136"
+			}
+		]
+	}
+{% endschema %}

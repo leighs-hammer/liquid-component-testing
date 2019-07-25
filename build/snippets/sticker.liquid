@@ -1,0 +1,21 @@
+
+
+{% if collections[collectionset].id != blank  %}
+	<a class="product-sticker-link" href="{{collections[collectionset].url}}">
+{% endif %}
+
+	<div class="product-sticker"
+		{% if color %}
+			style="background-color: {{color}};"
+		{% endif %} >
+		{% assign splitText = text | split: '-' %}
+		{% for word in splitText %}
+			{{word}}
+		{% endfor %}
+	</div>
+	
+
+{% if collections[collectionset].id != blank  %}
+	</a>
+{% endif %}
+

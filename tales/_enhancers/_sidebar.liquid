@@ -1,0 +1,37 @@
+<div id="quickNav">
+  
+  {% for list in nav %}
+    {% comment %} Tales specific nav {% endcomment %}
+      {% if list[0] == 'tales' %}
+        <h3><a href="/tales/tales" title="Tales Documentation">{{list[0]}}</a></h3>
+        <p>{{appConfig.navText.tales.subtext}}</p>
+    {% comment %} Folder navs {% endcomment %}
+      {% else %}
+        <h3 onclick="toggleList('list_{{list[0]}}')">{{list[0]}} <span><i class="material-icons">keyboard_arrow_down</i></span></h3>
+      {% endif %}
+    <ul id="list_{{list[0]}}" {% if list[0] == 'tales' %}class="list-expanded"{% endif %}>
+      {% for link in list[1] %}
+        <li>
+          <a href="/qv/{{link}}" {% if params.target == link %} class="active"{% endif %} title="Preview In pane">
+            <i class="material-icons">view_quilt</i> {{link}}
+          </a>
+          <a href="/{{link}}" class="fullscreenView {% if params.target == link %} active{% endif %}" title="Preview Fullscreen">
+            <i class="material-icons">launch</i>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endfor %}
+</div>
+
+<script type="application/javascript">
+  function toggleList(id){
+    const target = document.getElementById(id);
+    if (target.classList.contains('list-expanded')) {
+      target.classList.remove('list-expanded')    
+    } else {
+      target.classList.add('list-expanded')
+    }
+    return true
+  }
+</script>

@@ -1,0 +1,247 @@
+{% comment %} 
+	Full width Slide Shows
+	@todo, tie JS re instantiation to the theme editor window event. 
+ {% endcomment %}
+
+{%- capture sliderConfig -%}
+	{
+		"dots" : {{section.settings.enableDots}},
+		"arrows" : {{section.settings.enableSliderArrows}},
+		"autoplay" : {{section.settings.enableAutoPlay}},
+		"autoplaySpeed" : {{section.settings.autoPlaySpeed}},
+		"slidesToShow": 4,
+		"slidesToScroll" : 1,
+		"appendArrows" : "#slideshowControls-{{section.id}}",
+		"lazyLoad": "ondemand",
+		"responsive": [
+          {
+            "breakpoint": 1024,
+            "settings": {
+              "slidesToShow": 5
+            }
+          },
+          {
+            "breakpoint": 920,
+            "settings": {
+              "slidesToShow": 4
+            }
+          },
+          {
+            "breakpoint": 768,
+            "settings": {
+              "slidesToShow": 4
+            }
+          },
+          {
+            "breakpoint": 767,
+            "settings": {
+              "slidesToShow": 3
+            }
+          },
+          {
+            "breakpoint": 640,
+            "settings": {
+              "slidesToShow": 2
+            }
+          }
+        ]
+	}
+{%- endcapture -%}
+
+<div 
+	class="collections-slideshow"
+>
+	<div class="container">
+
+		{% comment %} Slider {% endcomment %}
+		<div 
+			class="collections-slideshow-container {% if section.settings.swapSides == true %}controls-flipped{% endif %}"
+			id="slideshow-{{section.id}}"
+			data-slick-slideshow="{{section.id}}"
+			data-slick-config='{{sliderConfig}}'
+			style="
+				border-color: {{section.settings.slide_border_color}};
+				background-color: {{section.settings.slide_background_color}};
+			"
+		>
+			{% for slide in section.blocks %}
+				{% assign collection = collections[slide.settings.slideCollection] %}
+				<div 
+					class="content-container"
+					id="slideshow-block-{{slide.id}}"
+					data-slick-theme-editor-index="{{forloop.index0}}"
+					{{ slide.shopify_attributes }}
+				>
+					<a 
+						href="{{collection.url}}" 
+						style="
+							background-color: {{section.settings.slide_background_color}};
+							border-left: 1px solid {{section.settings.slide_border_color}};
+							color: {{section.settings.slide_text_color}};
+						" 
+					>
+						<h3>{{collection.title}}</h3>
+						<img data-lazy="{{collection.image | img_url : '600x' }}" />
+
+						<div 
+							class="follow-arrow" 
+							style="background-color: {{section.settings.slide_arrow_background}}"
+						>
+							{% include 'icon-arrow-only' %}
+						</div>
+					</a>
+				</div>
+			{% endfor %}
+		</div>
+		{% comment %} Slider End {% endcomment %}
+		
+		{% comment %} Controls and Title {% endcomment %}
+		
+		<div class="section-title-and-controls {% if section.settings.swapSides == true %}controls-flipped{% endif %}" 
+			style="
+				background-color: {{section.settings.background_color}};
+				color: {{section.settings.text_color}};	
+			">
+			{%- assign tempTitle = section.settings.title | split: ' ' -%}
+			<h2>
+				{% for word in tempTitle %}
+					{% if forloop.index == 1 %}
+						<span>{{word}}</span>
+					{% else %}
+						{{word}}		
+					{% endif %}
+				{% endfor %}
+			</h2>
+
+			{% comment %} Slider Arrows are added here {% endcomment %}
+			<div id="slideshowControls-{{section.id}}" class="slider-controls-prev-next"></div>
+
+			{% comment %} Pointer {% endcomment %}
+			{% if section.settings.enablePointer %}
+				<div class="side-pointer" style="background-color: {{section.settings.background_color}};"></div>		
+			{% endif %}
+		</div>
+		{% comment %} Controls and Title End {% endcomment %}
+
+	</div> {% comment %} Container End {% endcomment %}
+</div>
+
+
+{% schema %}
+	{
+		"name": "Curated Collections",
+		"settings" : [
+			{
+				"type":      "header",
+				"content":   "Title"
+			},
+			{
+				"type": "color",
+				"id": "text_color",
+				"label": "text color",
+				"default": "#fff"
+			},
+			{
+				"type": "color",
+				"id": "background_color",
+				"label": "Background color",
+				"default": "#D34136"
+			},
+			{
+				"type":      "text",
+				"id":        "title",
+				"label":     "Section Label",
+				"default":   "Popular Collections",
+				"placeholder": "Popular Collections"
+			},
+			{
+				"type":      "checkbox",
+				"id":        "swapSides",
+				"label":     "Swap controls from left to right",
+				"default":   false
+			},
+			{
+				"type":      "checkbox",
+				"id":        "enablePointer",
+				"label":     "show pointer next to controls",
+				"default":   true
+			},
+			{
+				"type":      "header",
+				"content":   "Global Slide Settings"
+			},
+			{
+				"type": "color",
+				"id": "slide_text_color",
+				"label": "Slide text color",
+				"default": "#4A4A4A"
+			},
+			{
+				"type": "color",
+				"id": "slide_background_color",
+				"label": "Slide Background color",
+				"default": "#F4F4F4"
+			},
+			{
+				"type": "color",
+				"id": "slide_border_color",
+				"label": "Slide Border color",
+				"default": "#CDCDCD"
+			},
+			{
+				"type": "color",
+				"id": "slide_arrow_background",
+				"label": "Arrow Background Color",
+				"default": "#D34136"
+			},
+			{
+				"type":      "header",
+				"content":   "Slider Controls"
+			},
+			{
+				"type":      "checkbox",
+				"id":        "enableDots",
+				"label":     "Enable Sider Dots",
+				"default":   false
+			},
+			{
+				"type":      "checkbox",
+				"id":        "enableSliderArrows",
+				"label":     "Enable Sider Arrows",
+				"default":   true
+			},
+			{
+				"type":      "checkbox",
+				"id":        "enableAutoPlay",
+				"label":     "Enable auto play",
+				"default":   false
+			},
+			{
+				"type": "number",
+				"id": "autoPlaySpeed",
+				"label": "Rotation Speed in miliseconds",
+				"default" : 3000
+			}
+		],
+		"blocks" : [
+			{
+				"type": "collection",
+				"name": "Collection",
+				"settings" : [
+					{
+						"type":      "collection",
+						"id":        "slideCollection",
+						"label":     "Select Collection"
+					}
+				]
+			}
+		],
+		"presets": [
+      {
+        "name": "Curated Collections",
+        "category": "Visual Marketing"
+      }
+    ]
+		
+	}
+{% endschema %}

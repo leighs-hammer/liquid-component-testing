@@ -1,0 +1,83 @@
+{%- comment -%}
+  This is a not a required section for the Shopify Theme Store.
+  It is available in the "Global Message Bar" section in the theme editor.
+
+  Theme Store required settings
+  - Show announcement
+  - Text: message to announce
+  - Link: link of the announcement bar
+
+{%- endcomment -%}
+
+{% comment %} Global Message Bar {% endcomment %}
+
+<section class="global-message-bar" data-device="tablet">
+    <div class="container">
+        <h2>{{ section.settings.title }}</h2>
+        {% assign header-contact-us-text = section.settings.contact_us_text %}
+        {% include 'header-contact-us' %}
+        <ul class="global-messages">
+            {% for block in section.blocks %}
+                <a
+                    href="{{ block.settings.link }}"
+                    class="global-message"
+                >
+                    <figure>{{ block.settings.icon | img_url: '20x' | img_tag }}</figure>
+                    <span>{{ block.settings.text }}</span>
+                </a>
+            {% endfor %}
+        </ul>
+        {% comment %} @todo: currency Switcher {% endcomment %}
+        <figure class="currency-switcher">
+            {{ section.settings.currency_switcher | img_url: '146x' | img_tag }}
+        </figure>   
+    </div>
+</section>
+
+
+{% schema %}
+  {
+    "name": "Global Banner",
+        "settings": [
+        {
+            "type": "header",
+            "content": "Contact Us"
+        },
+        {
+            "type": "text",
+            "id": "contact_us_text",
+            "label": "Contact Us Text",
+            "default": "For Sales & Advice Call Us on "
+        },
+        {
+            "type": "image_picker",
+            "id": "currency_switcher",
+            "label": "Currency Switcher (@todo)"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "text",
+            "name": "Global Message",
+            "settings": [
+                {
+                    "id": "text",
+                    "type": "text",
+                    "label": "Global Message"
+                },
+                {
+                    "id": "link",
+                    "type": "text",
+                    "label": "Link"
+                },
+                {
+                    "id": "icon",
+                    "type": "image_picker",
+                    "label": "Icon"
+                }
+            ]
+        }
+    ]
+  }
+{% endschema %}
+

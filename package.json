@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "test:watch": "jest --watchAll",
+    "test:report": "npm-run-all -s test && mv ./jest_html_reporters.html ./tales/_reports/index.html",
+    "test:watch": "jest --watchAll", 
     "dev:server": "node ./index.js",
-    "dev:sass": "node-sass src/assets/global.styles.scss src/assets/global.styles.css --w src/**/*.scss",
+    "dev:watch": "nodemon ./index.js",
+    "dev:sass": "node-sass tales/_assets/global.styles.scss tales/_assets/global.styles.css --w tales/**/*.scss",
     "bs": ""
   },
   "author": "",
@@ -16,10 +18,13 @@
     "express": "^4.16.4",
     "express-reload": "^1.2.0",
     "jest": "^24.5.0",
+    "jest-html-reporter": "^2.5.0",
+    "jest-html-reporters": "^1.1.3",
     "jest-image-snapshot": "^2.8.1",
     "liquidjs": "^8.0.2",
     "node-sass": "^4.11.0",
     "nodemon": "^1.18.10",
+    "npm-run-all": "^4.1.5",
     "puppeteer": "^1.13.0",
     "ramda": "^0.26.1"
   },

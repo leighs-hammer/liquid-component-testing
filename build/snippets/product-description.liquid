@@ -1,0 +1,50 @@
+<div class="row product-details-description">
+	<ul 
+		data-responsive-accordion="{{product.id}}" 
+		class="responsive-accordion container"
+		id="rac-{{product.id}}"
+	>
+		<li
+			data-rac-item="description"
+			data-rac-active="true"
+			class="description"
+		>
+			<h3>Description</h3>
+			<div data-rac-item-data="description" class="hidden-data">
+				<h3 class="sub-tab-heading">PRODUCT DESCRIPTION</h3>
+				<div class="rte body-text-style two-col description-content">
+					{{ product.description }}
+				</div>
+			</div>
+		</li>
+		
+		<li
+			data-rac-item="delivery"
+			data-rac-active="false"
+		>
+			{% section 'shipping-table' %}
+		</li>
+
+		<li
+			data-rac-item="qanda"
+			data-rac-active="false"
+		>
+			<h3>Ask a question</h3>
+			<div data-rac-item-data="qanda" class="hidden-data">
+				{% include 'contact-form' %}
+			</div>
+		</li>
+		<li
+			data-rac-item="reviews"
+			data-rac-active="false"
+		>
+			<h3>Customer Reviews</h3>
+			<div data-rac-item-data="reviews" class="hidden-data">
+				<div class="rte">
+					Feefo placeholder
+				</div>
+			</div>
+		</li>
+	</ul>
+	{% comment %} Dropper is loaded here {% endcomment %}
+</div>

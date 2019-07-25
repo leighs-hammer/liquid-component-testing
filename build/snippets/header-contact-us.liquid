@@ -1,0 +1,24 @@
+{% comment %}
+
+    Example:
+    {% assign header-contact-us-text = section.settings.contact_us_text %}
+    Name of icon to be included from /snippets
+
+    {% assign header-mini-nav-item-link = '/location' %}
+    Assign href attribute on <a> tag
+
+    {% assign header-mini-nav-item-text = section.settings.mini_nav_stores_link_text %}
+    Assign text node within <a> tag. This is set in the admin at Sections > Header
+
+{% endcomment %}
+
+<article class="header-contact-us">
+    <a
+        href="/customer/contact"
+        class="header-contact-us"
+    >
+        {% include 'icon-phone' %}
+        <span>{{ header-contact-us-text }}</span>
+        <strong>{{ shop.phone }}</strong>
+    </a>
+</article>

@@ -1,0 +1,198 @@
+<footer>
+  {% comment %} // PRE FOOTER BAR START {% endcomment %}
+  <div class="footer-intro-bar">
+    <div class="container">
+      {% comment %} footer icons {% endcomment %}
+      {% if section.settings.show_footer_icon %}
+        <div class="footer-logo">
+          <a href="{{shop.url}}" title={{shop.name}}>
+            <img src="{{ settings.store_logo_long | img_url: '460x' }}" alt="{{shop.name}}" />
+          </a>
+        </div>
+      {% endif %}
+
+      {% comment %} footer payments provider {% endcomment %}
+      {% if section.settings.show_payment_icons %}
+        <div class="footer-payment-providers">
+          {% unless shop.enabled_payment_types == empty %}
+          <h3>{{ 'layout.footer.payment_methods' | t }}</h3>
+          <ul class="payment-icons">
+            {% for type in shop.enabled_payment_types %}
+              <li>
+                {{ type | payment_type_svg_tag: class: 'icon' }}
+              </li>
+            {% endfor %}
+          </ul>
+        {% endunless %}
+        </div>
+      {% endif %}
+
+      {% comment %} footer {% endcomment %}
+      {% if section.settings.show_social_icons %}
+        <div class="footer-social-icons">
+          <h3></h3>
+          {%- assign social_accounts = 'Facebook, Twitter, Pinterest, Instagram, Snapchat, Tumblr, YouTube, Vimeo,' | split: ', ' -%}
+          <ul>
+            {% for social in social_accounts %}
+              {%- assign social_handle = social | handleize -%}
+              {% capture social_link %}social_{{ social_handle }}_link{% endcapture %}
+              {% capture social_icon %}icon-{{ social_handle }}{% endcapture %}
+
+              {% if settings[social_link] != blank %}
+                <li>
+                  <a href="{{ settings[social_link] }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: social }}">
+                    {% include social_icon %}
+                    <span class="icon-fallback-text">{{ social }}</span>
+                  </a>
+                </li>
+              {% endif %}
+
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  {% comment %} // PRE FOOTER BAR END {% endcomment %}
+
+  {% comment %} // FOOTER MENUS START {% endcomment %}
+  <div class="footer-menu">
+    <div class="container">
+      <ul class="column-menu">
+        {% comment %} menu items {% endcomment %}
+        {%- assign footer_menu = section.settings.footer_menu -%}
+        {% if linklists[footer_menu].links.size > 0 %}
+          {% for link in linklists[section.settings.footer_menu].links %}
+            <li class="column-menu-list footer-accordion js-footer-accordion">
+              <a href="{{ link.url }}" class="column-header footer-menu-{{link.handle}} js-footer-header footer-header">
+                {{ link.title }}
+              </a>
+              {% comment %} submenu items start {% endcomment %}
+              {% if link.links != blank %}
+                <ul class="footer-submenu js-footer-content footer-content">
+                  {% for sub in link.links %}
+                    <li>
+                      <a href="{{ sub.url }}" class="footer-submenu-{{sub.handle}}">
+                        {{ sub.title }}
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+              {% comment %} submenu items end {% endcomment %}
+            </li>
+          {%endfor%}
+        {%endif%}
+        {% comment %} info as enabled {% endcomment %}
+        <li class="column-menu-list need-help-column">
+          <h3 class="column-header">NEED HELP?</h3>
+          <p><a href="/#">For Sales And Advice</a></p>
+          <p><a href="/#">Call us on 0121 501 1111</a></p>
+          <p><a href="/#">Email sales@skatehut.co.uk</a></p>
+        </li>
+        {% comment %} World wide if enabled {% endcomment %}
+        <li class="column-menu-list column-menu-list-currency-switcher">
+          <h3 class="column-header">WORLDWIDE</h3>
+          <p>Select your currency</p>
+          <div>
+            <div id="currencyTriggerButton">
+              <span>£ -</span><span class="small">(GBP)</span>
+            </div>
+            {% comment %} Drop down and trigger set would go here {% endcomment %}
+          </div>
+        </li>
+		<li class="back-to-top-wrapper">
+  			<a href="#" class="back-to-top">Back to Top</a>
+  		</li>
+      </ul>
+	  	
+    </div>
+  </div>
+  {% comment %} // FOOTER MENUS END {% endcomment %}
+
+  {% comment %} // ADVERT BAR START {% endcomment %}
+  <div class="footer-advert-bar">
+    <div class="container">
+      <a href="{{section.settings.footer_advert_link}}" title="{{section.settings.footer_advert_text}}">
+        <img src="{{section.settings.footer_advert | img_url: '1000x'}}" alt="{{section.settings.footer_advert_text}}" />
+      </a>
+    </div>
+  </div>
+  {% comment %} // ADVERT BAR END {% endcomment %}
+
+
+  {% comment %} // COPYRIGHT BAR START  {% endcomment %}
+  <div class="copyright_bar">
+    <div class="container">
+      <p>©{{"now" | date: "%Y"}} Copyright Skatehut Ltd</p>
+      {%- assign terms_menu = section.settings.terms_menu -%}
+      {% if linklists[terms_menu].links.size > 0 %}
+        <ul class="terms_menu">
+          {% for link in linklists[section.settings.terms_menu].links %}
+            <li>
+              <a href="{{ link.url }}">
+                {{ link.title }}
+              </a>
+            </li>
+          
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+  </div>
+  {% comment %} // COPYRIGHT BAR - END  {% endcomment %}
+
+
+</footer>
+
+{% schema %}
+  {
+    "name": "Footer",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_footer_icon",
+        "label": "Show footer icon",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_payment_icons",
+        "label": "Show payment icons",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show_Social_icons",
+        "label": "Show Social icons",
+        "default": false
+      },
+      {
+        "type": "link_list",
+        "id": "footer_menu",
+        "label": "Footer Menu"
+      },
+      {
+        "type": "image_picker",
+        "id": "footer_advert",
+        "label": "Advert Image"
+      },
+      {
+        "id": "footer_advert_link",
+        "type": "url",
+        "label": "Advert Link"
+      },
+      {
+        "type":      "text",
+        "id":        "footer_advert_text",
+        "label":     "Text"
+      },
+      {
+        "type": "link_list",
+        "id": "terms_menu",
+        "label": "Terms and conditions menu"
+      }
+    ]
+  }
+
+{% endschema %}

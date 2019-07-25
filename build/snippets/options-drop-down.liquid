@@ -1,0 +1,72 @@
+<div class="product-options">
+	{% unless product.has_only_default_variant %}
+		{% for option in product.options_with_values %}
+			<div class="product-options-label-wrap">
+				<label class="product-options-label" for="SingleOptionSelector-{{ forloop.index0 }}">
+					select a {{ option.name }}
+				</label>
+				{% assign optionName = option.name | downcase %}
+				{% for tag in product.tags %}
+					{% if tag contains "disable_size_switcher" %}
+						{% assign switcherDisabled = true %}
+					{% endif %}
+				{% endfor %}	
+				{% unless switcherDisabled %}
+					{% if  optionName == 'shoe size' %}
+						{% include 'product-options-size-toggle' %}	
+					{% endif %}	
+				{% endunless %}
+			</div>
+			<div class="selector-wrapper js" data-converter-select>
+				<select
+				id="SingleOptionSelector-{{ forloop.index0 }}"
+				class="product-options-select"
+				data-single-option-selector
+				data-index="option{{ option.position }}">
+				{% for value in option.values %}
+					<option
+					value="{{ value | escape }}"
+					{% if option.selected_value == value %}selected="selected"{% endif %}
+					{% for variant in product.variants %}		
+						{% unless variant.option2 %}					
+							{% unless variant.option3 %}		
+								{% if variant.option1 == value %}
+									{% unless variant.available %}
+										disabled
+									{% endunless %}
+								{% endif %}
+							{% endunless %}
+						{% endunless %}
+					{% endfor %} >
+					{{ value }}
+					</option>
+				{% endfor %}
+				</select>
+				<div class="product-options-buttons" id="proxy-{{ forloop.index0 }}"></div>
+				<script type="text/javascript">
+					document.addEventListener("DOMContentLoaded", function() {
+						var select = document.getElementById('SingleOptionSelector-{{ forloop.index0 }}');
+						var selectButtons = document.getElementById('proxy-{{ forloop.index0 }}');		
+						window.selectProxy(select, selectButtons);
+					});
+				</script>
+			</div>
+		{% endfor %}
+	{% endunless %}
+
+	{% comment %} `DO NOT TOUCH THE DATA-ATTRIBUTES BELOW {% endcomment %}
+	<select name="id" class="no-js" data-product-select data-product-select-source-of-truth>
+		{% for variant in product.variants %}
+		<option
+			{% if variant == current_variant %}selected="selected"{% endif %}
+			{% unless variant.available %}disabled="disabled"{% endunless %}
+			value="{{ variant.id }}"
+		>
+			{{ variant.title }}
+		</option>
+		{% endfor %}
+	</select>
+
+</div>
+
+

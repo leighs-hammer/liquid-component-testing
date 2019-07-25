@@ -1,0 +1,160 @@
+<div class="row collection-content">
+  <div class="container">
+    {% comment %} Collection Heading {% endcomment %}
+      <header role="banner" class="collection-heading">
+        <h1>{{ collection.title }}</h1>
+        {% if collection.description != blank %}
+          <div class="rte intro-text">
+            {{ collection.description }}
+          </div>
+        {% endif %}
+        <div class="control-bar">
+          <span class="control-title">View:</span>
+          <span data-trigger-layout-switch="6" alt="6" onclick="swapOnClick(6)">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+          <span data-trigger-layout-switch="4" alt="4" onclick="swapOnClick(4)">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+          {% comment %} Temp Script - Move and stapel to state {% endcomment %}
+          <script>
+            function swapOnClick(val) {
+              var mainList = document.querySelector('[data-product-list-display]')
+              mainList.setAttribute('data-product-list-display', val)
+            }
+          </script>
+          {% comment %} Temp Script - Move and stapel to state {% endcomment %}
+        </div>
+      </header>
+    {% comment %} Collection Heading END {% endcomment %}
+    {% comment %} Collection {% endcomment %}
+    <div class="flex-side-by-side">
+      {% comment %} Sidebar Start {% endcomment %}
+      <div class="flex-sidebar">
+        {% include 'filter-menu' %}
+      </div>
+      {% comment %} SideBar End {% endcomment %}
+      {% comment %} Content Start {% endcomment %}
+      <div class="flex-content">
+        {% paginate collection.products by 75 %}
+          
+
+          <ul class="main-list" data-product-list-display="6">
+            {% for product in collection.products %}
+              <li class="product">
+                {% if product.featured_image != blank %}
+                  <a href="{{ product.url | within: collection }}">
+                    {% include 'responsive-image' with
+                      image: product.featured_image,
+                      max_width: 700,
+                      max_height: 800
+                    %}
+                  </a>
+                {% endif %}
+
+                <p>
+                  <a href="{{ product.url | within: collection }}">{{ product.title }}</a>
+                </p>
+                <p>
+                  {% if product.compare_at_price > product.price %}
+
+                    {% if product.price_varies %}
+                      {%- assign sale_price = product.price | money -%}
+                      {{ 'products.product.on_sale_from_html' | t: price: sale_price }}
+                    {% else %}
+                      {{ 'products.product.on_sale' | t }}
+                      {{ product.price | money }}
+                    {% endif %}
+
+                  {% else %}
+
+                    {% if product.price_varies %}
+                      {%- assign price = product.price | money -%}
+                      {{ 'products.product.from_text_html' | t: price: price }}
+                    {% else %}
+                      {{ product.price | money }}
+                    {% endif %}
+
+                  {% endif %}
+
+                  {% if product.compare_at_price > product.price %}
+                    <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+                    <s>{{ product.compare_at_price | money }}</s>
+                  {% endif %}
+
+                  {% unless product.available %}
+                    {{ 'products.product.sold_out' | t }}
+                  {% endunless %}
+                </p>
+              </li>
+
+            {% else %}
+              {% comment %} DOWN Probably fucked {% endcomment %}
+              <li>
+              {% if collection.handle == 'all' and collection.all_vendors.size == 0 and collection.all_types.size == 0 %}
+                {% for i in (1..8) %}
+                  <a href="#">
+                    {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                    {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg placeholder-svg--small' }}
+                  </a>
+
+                  <p>
+                    <a href="#">{{ 'homepage.onboarding.product_title' | t }}</a>
+                  </p>
+
+                  <p>
+                    {{ 1999 | money }}
+                  </p>
+                {% endfor %}
+              {% else %}
+                <p>{{ 'collections.general.no_matches' | t }}</p>
+              {% endif %}
+              </li>
+              {% comment %} ^^ Probably fucker {% endcomment %}
+            {% endfor %}
+          </ul>
+          
+          <div class="main-pagination">
+            {% if paginate.pages > 1 %}
+              {% include 'pagination' %}
+            {% endif %}
+          </div>
+
+        {% endpaginate %}
+      </div>
+      {% comment %} Content End {% endcomment %}
+    </div>
+    {% comment %} Collection ends {% endcomment %}
+  </div>
+</div>
+
+
+
+
+{% section 'recently-viewed' %}
+{% comment %} ^ React rendered recents section {% endcomment %}
+
+{% comment %} 
+
+            {% if collection.all_tags.size > 0 %}
+              <ul>
+                {% for tag in collection.all_tags %}
+                  {% if current_tags contains tag %}
+                    <li class="active">
+                      {{ tag | link_to_remove_tag: tag }}
+                    </li>
+                  {% else %}
+                    <li>
+                      {{ tag | link_to_tag: tag }}
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            {% endif %}
+
+ {% endcomment %}

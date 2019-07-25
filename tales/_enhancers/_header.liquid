@@ -1,0 +1,19 @@
+<header>
+  <h1><a href="/">{{appConfig.name}}</a></h1>
+  <ul id="topLevelNav">
+    {% comment %} Tests Report {% endcomment %}
+    <li>
+      <a href="/iframe/reports/index" class="testColor">
+        <i class="material-icons">done_all</i>
+        <span>Tests Report</span>
+      </a>
+    </li>
+    {% comment %} Releases {% endcomment %}
+    <li>
+      <a href="/iframe/release/dashboard" class="deployColor">
+        <i class="material-icons">call_split</i>
+        <span>Releases</span>
+      </a>
+    </li>
+  </ul>
+</header>

@@ -1,0 +1,32 @@
+{% comment %} product object is available {% endcomment %}
+{% assign staple = product.handle %}
+
+{%- for sticker in section.blocks -%}
+	{{staple}} = {{sticker.settings.product_handle}} = {% if sticker.settings.product_handle == staple %}
+		TRUE
+	{% endif %}
+	</br>
+{%- endfor -%}
+
+
+
+{% schema %}
+  {
+    "name": "Extra Product Info",
+        "settings": [
+    ],
+    "blocks": [
+        {
+            "type": "text",
+            "name": "Product",
+            "settings": [
+                {
+                    "id": "product_handle",
+                    "type": "product",
+                    "label": "product handle"
+                }
+            ]
+        }
+    ]
+  }
+{% endschema %}

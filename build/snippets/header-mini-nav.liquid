@@ -1,0 +1,23 @@
+{% comment %}
+
+    Renders mini nav in top right of header
+
+{% endcomment %}
+
+<ul class="header-mini-nav">
+    {% assign header-mini-nav-item-icon = 'icon-location' %}
+    {% assign header-mini-nav-item-link = '/location' %}
+    {% assign header-mini-nav-item-text = section.settings.mini_nav_stores_link_text %}
+    {% include 'header-mini-nav-item' %}
+
+    {% assign header-mini-nav-item-icon = 'icon-account' %}
+    {% assign header-mini-nav-item-link = '/account' %}
+    {% assign header-mini-nav-item-text = section.settings.mini_nav_account_link_text %}
+    {% include 'header-mini-nav-item' %}
+
+    {% assign header-mini-nav-item-icon = 'icon-basket' %}
+    {% assign header-mini-nav-item-link = '/cart' %}
+    {% assign header-mini-nav-item-text = section.settings.mini_nav_basket_link_text %}
+    {% assign header-min-nav-pseudo-target = "basket" %}
+    {% include 'header-mini-nav-item' %}
+</ul>

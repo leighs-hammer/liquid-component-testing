@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="27px" viewBox="0 0 20 27" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_loop_48px</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="PLP-A" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-242.000000, -681.000000)">
+        <g id="Sub-Nav" transform="translate(65.000000, 668.000000)" fill="#D34136" fill-rule="nonzero">
+            <g id="ic_loop_48px" transform="translate(177.000000, 13.000000)">
+                <path d="M10,3.68181818 L10,0 L5,4.90909091 L10,9.81818182 L10,6.13636364 C14.14375,6.13636364 17.5,9.43159091 17.5,13.5 C17.5,14.7456818 17.18125,15.9115909 16.63125,16.9425 L18.45625,18.7343182 C19.425,17.2125 20,15.4268182 20,13.5 C20,8.07545455 15.525,3.68181818 10,3.68181818 Z M10,20.8636364 C5.85625,20.8636364 2.5,17.5684091 2.5,13.5 C2.5,12.2543182 2.81875,11.0884091 3.36875,10.0575 L1.54375,8.26568182 C0.575,9.7875 0,11.5731818 0,13.5 C0,18.9245455 4.475,23.3181818 10,23.3181818 L10,27 L15,22.0909091 L10,17.1818182 L10,20.8636364 Z" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

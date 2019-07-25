@@ -1,0 +1,92 @@
+
+
+
+<div data-section-id="{{ section.id }}" data-section-type="product" data-enable-history-state="true"  {% if section.settings.outline_arrows %} class="outline-arrows" {% endif %}>
+
+  {%- assign current_variant = product.selected_or_first_available_variant -%}
+  {%- assign featured_image = current_variant.featured_image | default: product.featured_image -%}
+  
+
+  <div class="container product-details-top">
+    <div class="product-details-images">
+      {% include 'product-images' %}
+    </div>
+    <div class="product-details-options">
+      {% include 'product-options' %}
+    </div>
+  </div>
+
+  {% unless product == empty %}
+    <script type="application/json" data-product-json>
+      {{ product | json }}
+    </script>
+  {% endunless %}
+</div>
+
+{% schema %}
+  {
+    "name": "Product pages",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "outline_arrows",
+        "label": "Outline on arrows",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Next day delivery days"
+      },
+      {
+        "type":      "checkbox",
+        "id":        "dd-sunday",
+        "label":     "Sunday",
+        "default":   false
+      },
+      {
+        "type":      "checkbox",
+        "id":        "dd-monday",
+        "label":     "Monday",
+        "default":   false
+      },
+      {
+        "type":      "checkbox",
+        "id":        "dd-tuesday",
+        "label":     "Tuesday",
+        "default":   false
+      },
+      {
+        "type":      "checkbox",
+        "id":        "dd-wednesday",
+        "label":     "Wednesday",
+        "default":   false
+      },
+      {
+        "type":      "checkbox",
+        "id":        "dd-thursday",
+        "label":     "Thursday",
+        "default":   false
+      },
+      {
+        "type":      "checkbox",
+        "id":        "dd-friday",
+        "label":     "Friday",
+        "default":   false
+      },
+      {
+        "type":      "checkbox",
+        "id":        "dd-saturday",
+        "label":     "Saturday",
+        "default":   false
+      },
+      {
+        "type":      "text",
+        "id":        "dd-cutoff",
+        "label":     "Next day delivery cut-off",
+        "default":   "16:00",
+        "info":      "Cut off time for next day delivery, use 24h format, ie: '17:00'",
+        "placeholder": "16:00"
+      }
+    ]
+  }
+{% endschema %}

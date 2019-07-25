@@ -1,0 +1,42 @@
+{% comment %}
+
+    Example:
+    {% assign btn-target = shop.url %}
+    Assign href attribute on <a> tag
+
+    {% assign btn-title = shop.name %}
+    Assign title attribute on <a> tag
+
+    {% assign btn-content = shop.name %}
+    Assign text node within <a> tag
+
+    {% assign btn-is-not-anchor = true %}
+    Output btn as <a> with true (or when unset) or <span> when this equals false
+
+    {% assign btn-modifier = 'btn-lines btn-lines--white' %}
+    Adds a class to the <a> tag. Modifies which style of button to include.
+    Available Options:
+        1. btn-rounded (default)
+        2. btn-rounded-full
+        3. btn-square
+        4. btn-lines (red)
+        5. btn-lines--white (white)
+        5. btn-lines--black (black)
+
+{% endcomment %}
+
+{% if btn-is-not-anchor == blank or btn-is-not-anchor  == false %}
+    {{ '<a' }}
+{% else %}
+    {{ '<span' }}
+{% endif %}
+    href="{{ btn-target }}"
+    title="{{ shop.name }}"
+    class="btn{% if btn-modifier != blank %} {{ btn-modifier }} {% else %} btn-rounded {%- endif -%}"
+>
+    {% if btn-content != blank %} {{ btn-content }} {% else %} Continue {%- endif -%}
+{% if btn-is-not-anchor == blank or btn-is-not-anchor  == false %}
+    {{ '</a>' }}
+{% else %}
+    {{ '</span>' }}
+{% endif %}

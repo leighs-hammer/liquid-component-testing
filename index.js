@@ -12,31 +12,106 @@ const R = require('ramda')
 
 const appConfig = require('./appConfig.js')
 
-const GLOBAL_STUBS = require('./stubs')
+const GLOBAL_STUBS = require('./tales/_stubs')
 
-// const stubbedOptions = require('./stubs/select.json')
+// const stubbedOptions = require('./tales/_stubs/select.json')
 
 // @todo move to config
 const port = 3000
 
 // Liquid Engine
-const engine = new Liquid({ root: path.resolve(__dirname, './src/snippets/'), extname: '.liquid' })
+const engine = new Liquid({ root: path.resolve(__dirname, './tales/snippets/'), extname: '.liquid' })
+
+// Tags
+engine.registerTag('section', {
+  parse: function(tagToken, remainTokens) {
+      this.str = tagToken.args; // name
+      console.log(this)
+  },
+  render: function(scope, hash) {
+      var str = `section`
+      return str
+  }
+})
+engine.registerTag('form', {
+  parse: function(tagToken, remainTokens) {
+      this.str = tagToken.args; // name
+      console.log(this)
+  },
+  render: function(scope, hash) {
+      var str = `<form>`
+      return str
+  }
+})
+engine.registerTag('endform', {
+  parse: function(tagToken, remainTokens) {
+      this.str = tagToken.args; // name
+      console.log(this)
+  },
+  render: function(scope, hash) {
+      var str = `</form>`
+      return str
+  }
+})
+engine.registerTag('schema', {
+  parse: function(tagToken, remainTokens) {
+      this.str = tagToken.args; // name
+      console.log(this)
+  },
+  render: function(scope, hash) {
+      var str = `<pre>`
+      return str
+  }
+})
+engine.registerTag('endschema', {
+  parse: function(tagToken, remainTokens) {
+      this.str = tagToken.args; // name
+      console.log(this)
+  },
+  render: function(scope, hash) {
+      var str = `</pre>`
+      return str
+  }
+})
+engine.registerTag('paginate', {
+  parse: function(tagToken, remainTokens) {
+      this.str = tagToken.args; // name
+      console.log(this)
+  },
+  render: function(scope, hash) {
+      var str = `paginate`
+      return str
+  }
+})
+engine.registerTag('endpaginate', {
+  parse: function(tagToken, remainTokens) {
+      this.str = tagToken.args; // name
+      console.log(this)
+  },
+  render: function(scope, hash) {
+      var str = `paginate`
+      return str
+  }
+})
 
 // express config
 app.engine('liquid', engine.express())
-// app.set('views', path.resolve(__dirname, './src'))
 app.set('view engine', 'liquid')
+
+
+
 // View Folders
 app.set('views', [
-    path.resolve(__dirname, './src/_docs'), 
-    path.resolve(__dirname, './src/_loaders'), 
-    path.resolve(__dirname, './src/_global'), 
-    path.resolve(__dirname, './src/_enhancers'), 
-    path.resolve(__dirname, './src/_tales'), 
-    path.resolve(__dirname, './src/layout'), 
-    path.resolve(__dirname, './src/templates'), 
-    path.resolve(__dirname, './src/snippets'),
-    path.resolve(__dirname, './src/sections'),
+    path.resolve(__dirname, './tales/_docs'), 
+    path.resolve(__dirname, './tales/_loaders'), 
+    path.resolve(__dirname, './tales/_global'), 
+    path.resolve(__dirname, './tales/_enhancers'), 
+    path.resolve(__dirname, './tales/_tales'), 
+    path.resolve(__dirname, './build/layout'), 
+    path.resolve(__dirname, './build/templates'), 
+    path.resolve(__dirname, './build/snippets'),
+    path.resolve(__dirname, './build/sections'),
+    path.resolve(__dirname, './build/assets'),
   ]
 )
 
@@ -53,13 +128,14 @@ const getFileList = (path) => {
 
 // data
 // const snippets = Object.keys(GLOBAL_STUBS)
-const snippets = getFileList(path.resolve(__dirname, './src/snippets'))
-const sections = getFileList(path.resolve(__dirname, './src/sections'))
-const layout = getFileList(path.resolve(__dirname, './src/layout'))
-const templates = getFileList(path.resolve(__dirname, './src/templates'))
+const snippets = getFileList(path.resolve(__dirname, './build/snippets'))
+const sections = getFileList(path.resolve(__dirname, './build/sections'))
+const layout = getFileList(path.resolve(__dirname, './build/layout'))
+const templates = getFileList(path.resolve(__dirname, './build/templates'))
+const assets = getFileList(path.resolve(__dirname, './build/assets'))
 
 // Tales
-const tales = getFileList(path.resolve(__dirname, './src/_tales'))
+const tales = getFileList(path.resolve(__dirname, './tales/_tales'))
 
 const appData = (req) => R.mergeAll([
   { appConfig : appConfig, 
@@ -78,9 +154,11 @@ app.get(`/`, function (req, res) { res.render( 'preview_index', R.merge(appData(
 app.get(`/qv/:target`, function (req, res) { res.render( 'preview_index', appData(req))})
 app.get(`/tales/:target`, function (req, res) { res.render( 'preview_index', appData(req))})
 app.get(`/:target`, function (req, res) { res.render( 'mock_theme', appData(req))})
+app.get(`/iframe/:type/:target/`, function (req, res) { res.render( 'iframe_loader', appData(req))})
+// app.get(`/reports/:target`, function (req, res) { res.render( 'iframe_loader', appData(req))})
 
 // Snippets
-// app.set('views', path.resolve(__dirname, './src/snippets'))
+// app.set('views', path.resolve(__dirname, './tales/snippets'))
 // snippets.map((view) => {
 //   app.get(`/${view}`, function (req, res) { res.render(view, R.merge({params: rew.params},GLOBAL_STUBS))})
 // })

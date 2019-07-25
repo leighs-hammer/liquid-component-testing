@@ -1,5 +1,5 @@
 const appConfig = {
-  "name": "Liquid Tales - a component library for shopify theme builds",
+  "name": "Liquid Tales",
   "navText" : {
     "tales": {
       "subtext" : "Decorator driven liquid renders."

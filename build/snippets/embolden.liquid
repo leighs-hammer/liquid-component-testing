@@ -1,0 +1,36 @@
+{% comment %}
+
+    Example:
+    {% assign title = section.settings.title %}
+    Full string to be split and a portion of which emboldened
+
+    {% assign emboldenment = section.settings.emboldenment %}
+    A checkbox (boolean)
+        1. true => emboldens the first word
+        2. false => emboldens the second word
+
+    {% assign modifier = 'emboldened-red' %}
+    Makes the text red if assigned.
+
+{% endcomment %}
+
+{% assign text = title | split: ' ' %}
+{% if emboldenment %}
+    <h2 class="emboldened-title {% if modifier != blank %} {{ modifier }} {%- endif -%}">
+        <strong>{{ text | first }}</strong>
+        {% for word in text %}
+            {% if forloop.index >= 2 %}
+            {{ word }}
+            {% endif %}
+        {% endfor %}
+        </h2>
+    {% else %}
+    <h2 class="emboldened-title {% if modifier != blank %} {{ modifier }} {%- endif -%}">
+        {% for word in text %}
+            {% if forloop.index != forloop.length %}
+            {{ word }}
+            {% endif %}
+        {% endfor %}
+        <strong>{{ text | last }}</strong>
+    </h2>
+{% endif %}

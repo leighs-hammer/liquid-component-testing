@@ -1,0 +1,53 @@
+{%- capture activeDays -%}
+    {% if section.settings.dd-sunday %}
+	 sunday,
+    {% endif %}
+    {% if section.settings.dd-monday %}
+      monday,
+    {% endif %}
+    {% if section.settings.dd-tuesday %}
+      tuesday,
+    {% endif %}
+    {% if section.settings.dd-wednesday %}
+      wednesday,
+    {% endif %}
+    {% if section.settings.dd-thursday %}
+      thursday,
+    {% endif %}
+    {% if section.settings.dd-friday %}
+      friday,
+    {% endif %}
+    {% if section.settings.dd-saturday %}
+      saturday,
+    {% endif %}
+{%- endcapture -%}
+
+
+{%- assign cutoffTime = section.settings.dd-cutoff | strip -%}
+
+{% assign nextDayAvailable = "false" %}
+{% if activeDays contains today %}
+	{% assign nextDayAvailable = "true" %}
+{% endif %}
+
+
+<div data-countdown-timer data-days-available="{{activeDays | strip | strip_newlines | remove: ' ' }}" data-cutoff-time="{{cutoffTime}}">
+    <svg width="17" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M11.333 0H5.667v1.905h5.666V0zM7.556 12.381h1.888V6.667H7.556v5.714zm7.579-6.3l1.346-1.357c-.407-.49-.85-.938-1.337-1.348l-1.346 1.357a8.414 8.414 0 0 0-5.303-1.876C3.797 2.857 0 6.695 0 11.43 0 16.162 3.797 20 8.495 20 13.194 20 17 16.162 17 11.429a8.56 8.56 0 0 0-1.865-5.348zM8.5 18.095c-3.65 0-6.611-2.985-6.611-6.666 0-3.681 2.96-6.667 6.611-6.667 3.65 0 6.611 2.986 6.611 6.667 0 3.68-2.96 6.666-6.611 6.666z" fill="#21D3C9" fill-rule="nonzero"/></svg>
+    Order within
+    <div class="countdown-main">
+        <div class="countdown-section">
+            <span class="countdown-digit" data-countdown-days></span><span class="countdown-label countdown-label-day">Day</span>
+        </div>
+        <div class="countdown-section"> 
+            <span class="countdown-digit" data-countdown-hours></span> <span class="countdown-label countdown-label-hours">HR</span>
+        </div>
+        <div class="countdown-section">
+            <span class="countdown-digit" data-countdown-mins></span> <span class="countdown-label countdown-label-min">Min</span>
+        </div>
+        <div class="countdown-section"> 
+            <span class="countdown-digit" data-countdown-secs></span> <span class="countdown-label countdown-label-secs">Sec</span> 
+        </div>
+    </div>
+    for delivery by <span data-delivery-day></span>*
+</div>
+

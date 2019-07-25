@@ -1,0 +1,95 @@
+{% comment %} Initial Navigation - move to section {% endcomment %}
+{% assign nav = linklists[section.settings.menu].links %}
+<div 
+	class="header-main-nav"
+>
+	<div class="navigation-shadow">
+		<div class="container">
+				<ul class="full-width-nav" id="header-navigation">
+
+					{% comment %} Logo Displayed on scroll {% endcomment %}
+					<li 
+						class="display-on-scroll in-nav-logo" 
+						data-scroll-display="true"
+					>
+						<a href="{{shop.url}}" title="{{shop.name}}" class="store-logo">
+							<img src="{{ settings.store_logo_long_inverse | img_url: '300x' }}" alt="{{shop.name}}" />
+						</a>
+					</li>
+					{% comment %} Logo Displayed on scroll - end {% endcomment %}
+
+					{% comment %} Main menu {% endcomment %}
+					{% for link in nav %}
+						<li 
+							class="toplevel-item" 
+							data-aid="{{link.handle}}" 
+							data-subitems="{%- if link.links != blank -%}true{% else %}false{%- endif -%}"
+							data-drop-active="false"
+							data-level="top"
+							id="toplevel-item-{{link.handle}}"
+						>
+							<a href="{{link.url}}">{{link.title}}</a><span data-toggle="open-children"></span>
+
+							{% comment %} Sublevel Nav {% endcomment %}
+							{%- if link.links != blank -%}
+								<ul class="subnav" data-sub-target="sub-target-{{link.handle}}">
+									{% for sublink in link.links %}
+										<li
+											id="secondlevel-item-{{sublink.handle}}"
+											class="secondlevel-item"
+											data-subitems="{%- if sublink.links != blank -%}true{% else %}false{%- endif -%}"
+										>
+											<a href="{{sublink.url}}">{{sublink.title}}</a><span data-toggle="open-children"></span>
+
+											{% comment %} Sub sub links - start {% endcomment %}
+											{%- if sublink.links != blank -%}
+												<ul class="subsubnav">
+													{% for subsublink in sublink.links %}
+														<li
+															id="thirdlevel-item-{{subsublink.handle}}"
+															class="thirdlevel-item"
+														>
+															<a href="{{subsublink.url}}">{{subsublink.title}}</a>
+														</li>
+													{% endfor %}
+												</ul>
+											{%- endif -%}
+											{% comment %} Sub sub links - end {% endcomment %}
+
+										</li>
+									{% endfor %}
+								</ul>
+							{%- endif -%}
+
+						</li>
+					{% endfor %}
+					{% comment %} Navigation Items End {% endcomment %}
+
+					{% comment %} Brands Flyout {% endcomment %}
+					{% comment %} Brands Flyout end {% endcomment %}
+				</ul>
+		</div>
+	</div>
+{% comment %} Dropper gets populated on toplevel click {% endcomment %}
+
+{% include 'header-navigation-dropper' %}
+</div>
+
+{% schema %}
+{
+	"name": "Header Navigation",
+	"settings": [
+		{
+			"type": "header",
+			"content": "Navigation"
+		},
+		{
+			"type": "link_list",
+			"id": "menu",
+			"label": "Menu",
+			"default": "main-menu"
+		}
+	]
+}
+{% endschema %}
+

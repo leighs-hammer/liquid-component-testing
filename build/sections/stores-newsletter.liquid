@@ -1,0 +1,145 @@
+{%- comment -%}
+  This is a required section for the Shopify Theme Store.
+  It is available when you add "Newsletter" section on the Theme Editor.
+
+  Theme Store required settings
+  - Heading: title of the newsletter section
+  - Subheading: description of the newsletter section
+{%- endcomment -%}
+
+<section class="stores-newsletter-wrapper">
+    <section
+        class="stores stores-newsletter-section"
+        style="background-image: url({{ section.settings.stores_image | img_url: '759x406' }});"
+    >
+        {% if section.settings.stores_title != blank %}
+            <h5 class="stores-newsletter-heading">{{ section.settings.stores_title | escape }}</h5>
+        {% endif %}
+        {% if section.settings.stores_subheading != blank %}
+            <p class="stores-newsletter-subheading">{{ section.settings.stores_subheading | escape }}</p>
+        {% endif %}
+        <div class="input-wrapper stores-input-wrapper">
+            <select data-js-select-nav="true">
+                {% for block in section.blocks %}
+                    <option data-js-option-nav="true" value="{{ block.settings.store_link }}">
+                        {{ block.settings.store_title }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+    </section>
+    <section
+        class="newsletter stores-newsletter-section"
+        style="background-image: url({{ section.settings.newsletter_image | img_url: '759x406' }});"
+        data-id="js-section-id"
+        >
+            {% if section.settings.newsletter_title != blank %}
+                <label class="stores-newsletter-heading" for="Email">{{ section.settings.newsletter_title | escape }}</label>
+            {% endif %}
+            {% if section.settings.newsletter_subheading != blank %}
+                <p class="stores-newsletter-subheading">{{ section.settings.newsletter_subheading | escape }}</p>
+            {% endif %}
+        <div class="input-wrapper">
+            {% form 'customer' %}
+                {{ form.errors | default_errors }}
+                {% if form.posted_successfully? %}
+                <p>{{ 'general.newsletter_form.confirmation' | t }}</p>
+                {% else %}
+                <input type="hidden" name="contact[tags]" value="newsletter">
+                <input type="email"
+                    name="contact[email]"
+                    id="Email"
+                    value="{% if customer.email != blank %}{{ customer.email }}{% endif %}"
+                    placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}"
+                    autocorrect="off"
+                    autocapitalize="off">
+                <button type="submit" name="commit" id="Subscribe">
+                    <span>{{ 'general.newsletter_form.submit' | t }}</span>
+                </button>
+                {% endif %}
+            {% endform %}
+        </div>
+    </section>
+</section>
+
+
+{% schema %}
+  {
+    "name": "Stores and Newsletter",
+    "settings": [
+      {
+        "type": "text",
+        "id": "stores_title",
+        "label": "Heading",
+        "default": "Visit Our Stores"
+      },
+      {
+        "type": "text",
+        "id": "stores_subheading",
+        "label": "Subheading",
+        "default": "Enter your email below"
+      },
+      {
+        "type": "image_picker",
+        "id": "stores_image",
+        "label": "Store Background Image"
+      },
+      {
+        "type": "text",
+        "id": "newsletter_title",
+        "label": "Heading",
+        "default": "Our newsletter"
+      },
+      {
+        "type": "text",
+        "id": "newsletter_subheading",
+        "label": "Subheading",
+        "default": "Enter your email below"
+      },
+      {
+        "type": "image_picker",
+        "id": "newsletter_image",
+        "label": "Newsletter Background Image"
+      },
+      {
+        "type": "paragraph",
+        "content": "Any customers who sign up will have an account created for them in Shopify. [View customers](/admin/customers?query=&accepts_marketing=1)"
+      }
+    ],
+    "blocks": [
+        {
+            "type": "text",
+            "name": "Stores",
+            "settings": 
+            [
+                {
+                    "id": "store_title",
+                    "type": "text",
+                    "label": "Location Title"
+                },
+                {
+                    "id": "store_link",
+                    "type": "url",
+                    "label": "Link to a Location"
+                }
+            ]
+        }
+    ],
+    "presets": [{
+      "name": "Stores & Newsletter",
+      "category": "Promotional"
+    }]
+  }
+{% endschema %}
+
+<script type="application/javascript">
+    (function() {
+        const select = document.querySelectorAll('[data-js-select-nav="true"]')[0];
+
+        function selectNav() {
+            window.location.replace(select.options[select.selectedIndex].value);            
+        }
+
+        select.addEventListener("change", selectNav);
+    })()
+</script>

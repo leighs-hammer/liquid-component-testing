@@ -1,0 +1,43 @@
+<div class="product-sizes-switcher-wrap">
+    <div class="product-sizes-switcher" data-size-toggle-wrap>
+        <div class="product-sizes-switcher-button" data-size-toggle='uk' data-size-active="true">uk</div>
+        <div class="product-sizes-switcher-button" data-size-toggle='eu'>eu</div>
+        <div class="product-sizes-switcher-button" data-size-toggle='us'>us</div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var toggle = document.querySelector('[data-size-toggle-wrap]');
+    toggle.addEventListener('click', function(e) {
+        if (!e.target.dataset.sizeToggle) {
+            return false;
+        }
+        window.emitSizeConverter(
+            {
+                gender: 'm',
+                selector: '[data-converter-select] option'
+                //customSizeTable: someBrandSpecificObj
+            },
+                function(optionEl, result) {
+                    if (result) {
+                        optionEl.innerHTML = result[e.target.dataset.sizeToggle];
+                        var toRemove = toggle.querySelectorAll('[data-size-active]');
+                        if (toRemove) {
+                            toRemove.forEach(function(el) {
+                                el.dataset.sizeActive = "false";
+                            });
+                        }
+                        e.target.dataset.sizeActive = "true";
+                        var value = optionEl.value;
+                        var button = document.querySelector('[data-option-value="' + value + '"]');
+                        button.innerHTML = result[e.target.dataset.sizeToggle];
+                    } else {
+                        throw new Error('Invalid shoe size specified: "' + optionEl.value.toString() + '"');
+                    }
+            });
+    });
+</script>
+
+<a class="options-view-size-guide" href="#" onclick="window.ajaxModal.loadModal('/pages/size-guide-lakai', 'json', 'sizeguide'); return false;">
+    Size Guide
+</a>

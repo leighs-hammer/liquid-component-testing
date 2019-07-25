@@ -1,0 +1,22 @@
+{% comment %} 
+	This is a permanently available modal container where content is injected via ajax  
+{% endcomment %}
+
+<div 
+	class="modal-overlay"
+	data-ajax-modal-action="close" 
+>
+	<div 
+		class="modal-inner"
+		data-ajax-modal="target"
+		data-ajax-modal-loading="false"
+	>
+		<div class="modal-controls">
+			<span data-ajax-modal-action="close">close</span>
+		</div>
+		<div data-ajax-modal-content="true">
+		
+		</div>
+
+	</div>
+</div>

@@ -1,0 +1,154 @@
+<h3>{{section.settings.shipping_nav_title}}</h3>
+<div data-rac-item-data="delivery" class="hidden-data">
+	<h3 class="sub-tab-heading">{{section.settings.shipping_title}}</h3>
+	<div class="rte shipping-table">
+		<table>
+			<tr class="table-header">
+				<th width="50%">{{section.settings.table_heading_methods}}</th>
+				<th>{{section.settings.table_heading_under}}</th>
+				<th>{{section.settings.table_heading_min}}</th>
+				<th>{{section.settings.table_heading_over}}</th>
+			</tr>
+			{% for method in section.blocks %}
+				{% if method.settings.tag_staple != blank %}
+					{% if product.tags contains method.settings.tag_staple %}
+						<tr data-shipping-method-title="{{method.settings.shipping_type_title}}">
+							<td class="table-block-title">
+								{% if method.settings.icon %}
+									<img src="{{method.settings.icon | img_url : '150x'}}" alt="{{method.settings.title}}" />
+
+								{% endif %}
+								<span>{{method.settings.title}}</span>
+							</td>
+							<td class="table-shipping-price" data-tier-title="{{section.settings.table_heading_under}}">{{method.settings.shipping_cost_under | money}}</td>
+							<td class="table-shipping-price" data-tier-title="{{section.settings.table_heading_min}}">{{method.settings.shipping_cost_mid | money}}</td>
+							<td class="table-shipping-price" data-tier-title="{{section.settings.table_heading_over}}">{{method.settings.shipping_cost_over | money}}</td>
+						</tr>
+					{% else %}
+							{% comment %} Nothing is rendered in this case  {% endcomment %}
+					{% endif %}
+				{% else %}
+					<tr data-shipping-method-title="{{method.settings.shipping_type_title}}">
+						<td class="table-block-title">
+							{% if method.settings.icon %}
+								<img src="{{method.settings.icon | img_url : '150x'}}" alt="{{method.settings.title}}" />
+							{% endif %}
+							<span>{{method.settings.title}}</span>
+						</td>
+						<td class="table-shipping-price" data-tier-title="{{section.settings.table_heading_under}}">{{method.settings.shipping_cost_under | money}}</td>
+						<td class="table-shipping-price" data-tier-title="{{section.settings.table_heading_min}}">{{method.settings.shipping_cost_mid | money}}</td>
+						<td class="table-shipping-price" data-tier-title="{{section.settings.table_heading_over}}">{{method.settings.shipping_cost_over | money}}</td>
+					</tr>
+				{% endif %}
+
+
+			{% endfor %}
+			
+		</table>
+		<div class="rte">
+			{{ section.settings.additional_html }}
+		</div>
+	</div>
+</div>
+
+{% schema %}
+	{
+		"name": "Shipping Table",
+		"settings" : [
+			{
+				"type":      "text",
+				"id":        "shipping_nav_title",
+				"label":     "Shipping Navigation Title",
+				"default":   "delivery"
+			},
+			{
+				"type":      "text",
+				"id":        "shipping_title",
+				"label":     "Shipping Title",
+				"default":   "DELIVERY & RETURNS"
+			},
+			{
+				"type": "header",
+				"content": "Table Titles"
+			},
+			{
+				"type":      "text",
+				"id":        "table_heading_title",
+				"label":     "Basket Value Title",
+				"default":   "Basket Value"
+			},
+			{
+				"type":      "text",
+				"id":        "table_heading_methods",
+				"label":     "Shipping method title",
+				"default":   "Shipping Method"
+			},
+			{
+				"type":      "text",
+				"id":        "table_heading_under",
+				"label":     "Basket Value Title - 1",
+				"default":   "Under £40"
+			},
+			{
+				"type":      "text",
+				"id":        "table_heading_min",
+				"label":     "Basket Value Title - 2",
+				"default":   "£40-£100"
+			},
+			{
+				"type":      "text",
+				"id":        "table_heading_over",
+				"label":     "Basket Value Title - 3",
+				"default":   "Over £100"
+			},
+			{
+				"type": "header",
+				"content": "Additional Space"
+			},
+			{
+				"type": "richtext",
+				"id": "additional_html",
+				"label": "Additional HTML"
+			}
+		],
+		"blocks": [
+			{
+				"type": "shippingType",
+				"name": "Shipping Method",
+				"settings" : [
+					{
+						"type":      "text",
+						"id":        "title",
+						"label":     "Title"
+					},
+					{
+						"type": "image_picker",
+						"id": "icon",
+						"label": "Shipping icon (optional)"
+					},
+					{
+						"type":      "number",
+						"id":        "shipping_cost_under",
+						"label":     "Price Basket Value - 1"
+					},
+					{
+						"type":      "number",
+						"id":        "shipping_cost_mid",
+						"label":     "Price Basket Value - 2"
+					},
+					{
+						"type":      "number",
+						"id":        "shipping_cost_over",
+						"label":     "Price Basket Value - 3"
+					},
+					{
+						"type":      "text",
+						"id":        "tag_staple",
+						"label":     "Tag Handle",
+						"info" : "If this is entered only products containing the specific tag will have these options displayed"
+					}
+				]
+			}
+		]
+	}
+{% endschema %}

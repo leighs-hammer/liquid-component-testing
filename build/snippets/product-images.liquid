@@ -1,0 +1,86 @@
+{%- capture mainSliderConfig -%}
+  {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "asNavFor": "#slideshow-nav-product",
+    "arrows": false,
+		"swipe": false,
+		"touchMove": false,
+    "fade": true
+  }
+{%- endcapture -%}
+
+{%- capture navSliderConfig -%}
+  {
+    "slidesToShow": 6,
+    "slidesToScroll": 1,
+    "asNavFor": "#slideshow-product",
+    "focusOnSelect": true,
+    "infinite": false,
+    "lazyLoad": "ondemand",
+    "arrows": false
+  }
+{%- endcapture -%}
+
+
+
+
+
+  <div id="product-slideshow-container" class="product-slideshow-container">
+
+  {% include 'stickers' %}
+
+  <span class="closer js-closer">CLOSE</span>
+    <div
+        id="slideshow-product"
+        data-slick-slideshow="{{product.id}}"
+        data-slick-config='{{mainSliderConfig}}'
+        class="slideshow-product"
+        
+         >
+      {% for image in product.images %}
+        <div
+              class="product-details-slide-outer"
+              data-slick-theme-editor-index="{{forloop.index0}}"
+              >
+          <figure
+              class="product-details-slide js-product-detail-slide"
+              data-zoom-slider-shopify-index="{{forloop.index0}}"
+              data-shopify-image-id="{{image.id}}"
+            >
+            <div class="small-bg" style="background-image:url({{ image.src | img_url: '200x200' }})"></div>
+            <img
+              {% if forloop.first %} data-product-featured-image="true" {% endif %}    
+              data-lazy="{{ image.src | img_url: '1000x' }}" 
+              data-no-zoom="{{ image.src | img_url: '1000x' }}" 
+              data-zoomed="{{ image.src | img_url: '3000x' }}" 
+              alt="{{ image.alt | escape }}"
+
+            >
+          </figure>
+        </div>
+      {% endfor %}
+    </div>
+</div>
+
+{% if product.images.size > 1 %}
+  <div
+      id="slideshow-nav-product"
+      data-slick-slideshow="nav-{{product.id}}"
+      data-slick-config='{{navSliderConfig}}'
+      class="slideshow-nav"
+      >
+    {% for image in product.images %}
+      <div {{ slide.shopify_attributes }}>
+        
+        <img class="slideshow-thumb" data-lazy="{{ image.src | img_url: '160x160' }}" alt="{{ image.alt | escape }}">
+
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% comment %} 
+{% if section.settings.show_share_buttons %}
+  {% include 'social-sharing', share_title: product.title, share_permalink: product.url, share_image: product %}
+{% endif %} {% endcomment %}

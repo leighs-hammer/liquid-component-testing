@@ -1,0 +1,196 @@
+{% comment %} 
+	Full width Slide Shows
+	@todo, tie JS re instantiation to the theme editor window event. 
+ {% endcomment %}
+
+{%- capture sliderConfig -%}
+	{
+		"dots" : {{section.settings.enableDots}},
+		"arrows" : {{section.settings.enableSliderArrows}},
+		"autoplay" : {{section.settings.enableAutoPlay}},
+		"autoplaySpeed" : {{section.settings.autoPlaySpeed}},
+		"lazyLoad":"ondemand"
+	}
+{%- endcapture -%}
+
+<div 
+	class="fullwidth-slideshow"
+>
+	<div 
+		class="fullwidth-slideshow-container"
+		id="slideshow-{{section.id}}"
+		data-slick-slideshow="{{section.id}}"
+		data-slick-config='{{sliderConfig}}'
+	>
+		{% for slide in section.blocks %}
+			<div
+				data-fws-
+				class="fws-slide" 
+				style="
+					{%- if slide.settings.useImage == false -%}background-image: url({{slide.settings.bkg | img_url : '1440x' }});{%- endif -%}
+					background-color: {{slide.settings.bkgColor}};
+					max-height: 395px;
+					min-height: 395px; 
+					background-size: cover;
+					position: relative;
+					width: 100%;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					object-fit: cover;
+				"
+				{{ slide.shopify_attributes }}
+				id="slideshow-block-{{slide.id}}"
+				data-slick-theme-editor-index="{{forloop.index0}}"
+			>
+			<div class="flex-implicit">
+					{% comment %}  {% endcomment %}
+					{%- if slide.settings.useImage == true -%}
+						<img 
+							data-lazy="{{slide.settings.bkg | img_url : '1440x' }}" 
+							alt="{{slide.settings.title}}" 
+							style="
+								width: 100%; 
+								height: auto;"
+						/>
+					{%- endif -%}
+
+					<div 
+						class="movable-text" 
+						style="
+						position: absolute; 
+						top: 0px; 
+						display: flex !important; 
+						justify-content: center; 
+						aling-items: center; 
+						flex-direction: column;
+						height: 100%;
+						left: calc({{slide.settings.text_position}}% - 150px);
+						color: {{slide.settings.textColor}};
+						width: 300px;
+						"
+					>
+						<h2>{{slide.settings.title}}</h2>
+
+						{% assign btn-target = slide.settings.cta_url %}
+						{% assign btn-title = slide.settings.title %}
+						{% assign btn-content = slide.settings.cta_text %}
+						{% assign btn-modifier = 'btn-lines btn-lines--white' %}
+						{% include 'btn' %}
+
+
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+</div>
+
+{% schema %}
+	{
+		"name": "Full Width Slideshow",
+		"settings" : [
+			{
+				"type":      "header",
+				"content":   "Slider Controls"
+			},
+			{
+				"type":      "checkbox",
+				"id":        "enableDots",
+				"label":     "Enable Sider Dots",
+				"default":   true
+			},
+			{
+				"type":      "checkbox",
+				"id":        "enableSliderArrows",
+				"label":     "Enable Sider Arrows",
+				"default":   true
+			},
+			{
+				"type":      "checkbox",
+				"id":        "enableAutoPlay",
+				"label":     "Enable auto play",
+				"default":   false
+			},
+			{
+				"type": "number",
+				"id": "autoPlaySpeed",
+				"label": "Rotation Speed in miliseconds",
+				"default" : 3000
+			}
+		],
+		"blocks" : [
+			{
+				"type": "slide",
+				"name": "Slide",
+				"settings": [
+					{
+						"type":      "header",
+						"content":   "Background Image"
+					},
+					{
+						"type": "image_picker",
+						"id": "bkg",
+						"label": "Background Image"
+					},
+					{
+						"type":      "checkbox",
+						"id":        "useImage",
+						"label":     "Use as implicit image",
+						"default":   false,
+						"info":      "Selecting this changes the behavior from a background image to a block image, the background color should be set to handle any bleed where the image dosnt fill the width"
+					},
+					{
+						"type": "color",
+						"id": "bkgColor",
+						"label": "Background Color",
+						"default": "#ffffff"
+					},
+					{
+						"type":      "header",
+						"content":   "Text and Links"
+					},
+					{
+						"type": "color",
+						"id": "textColor",
+						"label": "Text Color",
+						"default": "#ffffff"
+					},
+					{
+						"type": "text",
+						"id": "title",
+						"label": "Title Text"
+					},
+					{
+						"type": "text",
+						"id": "cta_text",
+						"label": "Text for button",
+						"default": "shop now"
+					},
+					{
+						"type": "url",
+						"id": "cta_url",
+						"label": "link for button"
+					},
+					{
+						"type":   "range",
+						"id":     "text_position",
+						"min":       0,
+						"max":       100,
+						"step":      1,
+						"unit":      "%",
+						"label":     "Horizontal position of CTA text",
+						"info":     "Only effects tablet portrait sizes and above",
+						"default":   50
+					}
+				]
+			}
+		],
+		"presets": [
+      {
+        "name": "Full Width Slideshow",
+        "category": "Visual Marketing"
+      }
+    ]
+	}
+{% endschema %}

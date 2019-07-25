@@ -1,0 +1,35 @@
+<div class="buttonDecorator">
+  <h1>A show case of different button styles</h1>
+  <p>These are purely visually tested</p>
+
+  <ul style="display: flex; justify-content: center; flex-wrap: wrap;">
+    {% comment %} Default Button {% endcomment %}
+    <li style="background-color: #$fff; color: #fff; padding: 20px;">
+      <label>Default Button</label>
+      {% assign btn-target = "#" %}
+      {% assign btn-title = "Test Shop" %}
+      {% assign btn-content = "Button Content" %}
+      {% assign btn-modifier = 'btn-lines' %}
+      {% include 'btn' %}
+    </li>
+    {% comment %} Default Button {% endcomment %}
+    <li style="background-color: #333; color: #fff; padding: 20px;">
+      <label>White Button</label>
+      {% assign btn-target = "#" %}
+      {% assign btn-title = "Test Shop" %}
+      {% assign btn-content = "Button Content" %}
+      {% assign btn-modifier = 'btn-lines btn-lines--white' %}
+      {% include 'btn' %}
+    </li>
+    {% comment %} Default Button {% endcomment %}
+    <li style="color: #fff; padding: 20px;">
+      <label>Rounded Button</label>
+      {% assign btn-target = "#" %}
+      {% assign btn-title = "Test Shop" %}
+      {% assign btn-content = "Button Content" %}
+      {% assign btn-modifier = 'btn-lines' %}
+      {% include 'btn' %}
+    </li>
+  
+  <ul>
+</div>

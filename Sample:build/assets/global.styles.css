@@ -1,0 +1,126 @@
+#preview_index,
+#mock_theme {
+  margin: 0px;
+  padding: 0px; }
+  #preview_index header,
+  #mock_theme header {
+    padding: 8px;
+    background-color: rgba(7, 59, 76, 0.1);
+    border-bottom: 1px solid rgba(7, 59, 76, 0.2);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 40px; }
+    #preview_index header h1, #preview_index header h1 a,
+    #mock_theme header h1,
+    #mock_theme header h1 a {
+      font-size: 24px;
+      margin-top: 0px;
+      margin-bottom: 0px;
+      color: #333;
+      text-decoration: none; }
+      #preview_index header h1:hover, #preview_index header h1 a:hover,
+      #mock_theme header h1:hover,
+      #mock_theme header h1 a:hover {
+        color: #118ab2; }
+    #preview_index header ul,
+    #mock_theme header ul {
+      display: flex;
+      flex: 1;
+      justify-content: flex-end; }
+      #preview_index header ul li,
+      #mock_theme header ul li {
+        display: flex;
+        justify-content: flex-end;
+        padding-left: 4px;
+        padding-right: 4px;
+        opacity: 0.8;
+        transition: all 0.3s ease; }
+        #preview_index header ul li:hover,
+        #mock_theme header ul li:hover {
+          opacity: 1; }
+        #preview_index header ul li a,
+        #mock_theme header ul li a {
+          display: flex;
+          justify-content: baseline;
+          align-items: center;
+          text-decoration: none;
+          color: #ef476f; }
+          #preview_index header ul li a span,
+          #mock_theme header ul li a span {
+            color: #ef476f;
+            margin-bottom: 0px;
+            margin-left: 4px; }
+        #preview_index header ul li .deployColor,
+        #mock_theme header ul li .deployColor {
+          color: #118ab2; }
+          #preview_index header ul li .deployColor span,
+          #mock_theme header ul li .deployColor span {
+            color: #118ab2; }
+  #preview_index #combinedStage,
+  #mock_theme #combinedStage {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; }
+    #preview_index #combinedStage #quickNav,
+    #mock_theme #combinedStage #quickNav {
+      width: 250px;
+      min-height: calc(100vh - 40px);
+      padding: 10px;
+      border-right: 1px solid rgba(7, 59, 76, 0.2);
+      background-color: rgba(7, 59, 76, 0.05); }
+      #preview_index #combinedStage #quickNav h3,
+      #mock_theme #combinedStage #quickNav h3 {
+        font-size: 18px;
+        line-height: 1.5;
+        color: #444;
+        text-transform: uppercase; }
+        #preview_index #combinedStage #quickNav h3 a,
+        #mock_theme #combinedStage #quickNav h3 a {
+          color: #073b4c; }
+      #preview_index #combinedStage #quickNav p,
+      #mock_theme #combinedStage #quickNav p {
+        font-size: 14px;
+        opacity: 0.5;
+        padding-bottom: 4px;
+        margin-bottom: 4px;
+        border-bottom: 1px solid rgba(7, 59, 76, 0.2); }
+      #preview_index #combinedStage #quickNav ul,
+      #mock_theme #combinedStage #quickNav ul {
+        margin-bottom: 10px; }
+        #preview_index #combinedStage #quickNav ul li,
+        #mock_theme #combinedStage #quickNav ul li {
+          display: flex;
+          font-size: 16px;
+          justify-content: space-between;
+          padding-top: 2px;
+          padding-bottom: 2px;
+          border-bottom: 1px solid rgba(7, 59, 76, 0.05); }
+          #preview_index #combinedStage #quickNav ul li .fullscreenView,
+          #mock_theme #combinedStage #quickNav ul li .fullscreenView {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            color: #ef476f;
+            border-left: 1px solid rgba(7, 59, 76, 0.2);
+            padding-left: 4px; }
+          #preview_index #combinedStage #quickNav ul li:hover .fullscreenView,
+          #mock_theme #combinedStage #quickNav ul li:hover .fullscreenView {
+            opacity: 1;
+            visibility: visible; }
+      #preview_index #combinedStage #quickNav a,
+      #mock_theme #combinedStage #quickNav a {
+        color: #06d6a0;
+        text-decoration: none;
+        line-height: 1.5;
+        display: flex; }
+        #preview_index #combinedStage #quickNav a:hover,
+        #mock_theme #combinedStage #quickNav a:hover {
+          color: #118ab2; }
+        #preview_index #combinedStage #quickNav a.active,
+        #mock_theme #combinedStage #quickNav a.active {
+          color: #118ab2; }
+    #preview_index #combinedStage #mainStage,
+    #mock_theme #combinedStage #mainStage {
+      flex: 1;
+      padding: 20px; }

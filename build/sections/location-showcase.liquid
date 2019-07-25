@@ -1,0 +1,91 @@
+{%- comment -%}
+  This is a required section for the Shopify Theme Store.
+  It is available when you add the "Locations" section in the theme editor.
+
+  Theme Store required settings
+  - Image
+  - Title: description of the block
+  - Subtitle: description of the block
+  - Link: Page to link to
+
+{%- endcomment -%}
+
+<section data-device="tablet" class="locations-wrapper container">
+  {% if section.settings.title != blank %}
+    {% assign title = section.settings.title %}
+    {% assign emboldenment = section.settings.emboldenment %}
+    {% include 'embolden' %}
+  {% endif %}
+  <div class="locations-inner">
+    {% for block in section.blocks %}
+      <a
+        href="{{ block.settings.link }}"
+        class="location"
+      >
+        <figure class="locations-image">{{ block.settings.image | img_url: '450x' | img_tag }}</figure>
+        <main class="locations-content">
+          <h4 class="location-title">{{ block.settings.title }}</h4>
+          <h5 class="location-subtitle">{{ block.settings.subtitle }}</h5>
+        </main>
+      </a>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Location Showcase",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Navigation"
+      },
+      {
+        "id": "title",
+        "type": "text",
+        "label": "Title"
+      },
+      {
+        "type":      "checkbox",
+        "id":        "emboldenment",
+        "label":     "Embolden First Word",
+        "info":      "Uncheck to embolden last word",
+        "default":   true
+      }
+    ],
+	  "blocks": [
+      {
+        "type": "text",
+        "name": "Location Panel",
+        "settings": [
+          {
+            "id": "title",
+            "type": "text",
+            "label": "Title"
+          },
+          {
+            "id": "subtitle",
+            "type": "text",
+            "label": "Subtitle"
+          },
+          {
+            "id": "link",
+            "type": "text",
+            "label": "Link"
+          },
+          {
+            "id": "image",
+            "type": "image_picker",
+            "label": "Image"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Location Showcase",
+        "category": "Image"
+      }
+    ]
+  }
+{% endschema %}

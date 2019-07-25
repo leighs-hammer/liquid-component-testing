@@ -1,0 +1,40 @@
+<div 
+	data-react-flyout="mini-cart"
+>
+	<div class="overlay" data-react-flyout-close="mini-cart"></div>
+
+	<div class="minicart-closer" data-react-flyout-close="mini-cart">Close</div>
+	{% comment %} React will be rendered in here {% endcomment %}
+	<div id="mini-cart" data-react-render-target="mini-cart" data-react-config></div>
+	<script src="{{ 'blu-mini-cart.js' | asset_url }}"></script>
+</div>
+
+<script>
+(function(){
+	const scriptSrc = "{{ 'blu-mini-cart.js' | asset_url }}"
+	document.addEventListener("DOMContentLoaded", function(event) {
+    // set over lay close function
+		const overlayClickout =  document.querySelectorAll('[data-react-flyout-close="mini-cart"]')
+		overlayClickout.forEach((el) => {
+			el.addEventListener('click', window.addToCartHelpers.closeMiniCart)
+		}) 
+		const basketIcons = document.querySelectorAll('[data-psuedo-target="basket"]')
+		basketIcons.forEach((el) => {
+			el.addEventListener('click', (e) => {
+					e.preventDefault()
+					// open
+					window.addToCartHelpers.openMiniCartAndRender()
+			})
+		})
+
+  })
+})()
+
+</script>
+
+{% schema %}
+	{
+		"name": "Mini Cart",
+		"settings": []
+	}
+{% endschema %}

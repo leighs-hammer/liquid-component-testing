@@ -1,0 +1,29 @@
+{% comment %}
+
+    Example:
+    {% assign header-mini-nav-item-icon = 'icon-location' %}
+    Name of icon to be included from /snippets
+
+    {% assign header-mini-nav-item-link = '/location' %}
+    Assign href attribute on <a> tag
+
+    {% assign header-mini-nav-item-text = section.settings.mini_nav_stores_link_text %}
+    Assign text node within <a> tag. This is set in the admin at Sections > Header
+
+{% endcomment %}
+
+<li class="header-mini-nav-item">
+    <a
+        class="header-mini-nav-item-link"
+        href="{{header-mini-nav-item-link}}"
+        data-psuedo-target="{{header-min-nav-pseudo-target}}"
+        data-pseudo-content=""
+    >
+        <figure
+            class="header-mini-nav-item-image-wrapper"
+        >
+            {% include header-mini-nav-item-icon %}
+            <figcaption class="header-mini-nav-item-text">{{header-mini-nav-item-text}}</figcaption>
+        </figure>
+    </a>
+</li>

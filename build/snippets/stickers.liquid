@@ -1,0 +1,37 @@
+<div class="product-stickers">
+	{% for tag in product.tags %}
+		{% if tag contains "sticker__" %}
+			{% assign splitTag = tag | split: '__' %}
+			{% assign stickerStrings = splitTag[1] | split: '_' %}
+
+			{% for string in stickerStrings %}
+				{% comment %} COLOR: {% endcomment %}
+				{% if string contains 'color:' %}
+				{% assign pair = string | split: ':' %}
+				{% assign color = pair.last %}
+				{% endif %}
+				{% comment %} TEXT: {% endcomment %}
+				{% if string contains 'text:' %}
+				{% assign pair = string | split: ':' %}
+				{% assign text = pair.last %}
+				{% endif %}
+				{% comment %} COLLECTION: {% endcomment %}
+				{% if string contains 'collection:' %}
+				{% assign pair = string | split: ':' %}
+				{% assign collectionset = pair.last %}
+				{% endif %}        
+			{% endfor %}
+			
+			{% if text %}
+				{% include 'sticker' %}
+			{% endif %}
+			
+		{% endif %}
+			{% assign collectionset = '' %}
+			{% assign text = '' %}
+			{% assign color = '' %}
+			{% assign pair = '' %}
+			{% assign splitTag = '' %}
+			{% assign stickerStrings = '' %}
+	{% endfor %}
+  </div>
