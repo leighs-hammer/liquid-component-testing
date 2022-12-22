@@ -14,7 +14,7 @@
     "express": "^4.16.4",
     "jest": "^24.5.0",
     "jest-image-snapshot": "^2.8.1",
-    "liquidjs": "^8.0.2",
+    "liquidjs": "^10.0.0",
     "nodemon": "^1.18.10",
     "puppeteer": "^1.13.0"
   },
